@@ -48,7 +48,7 @@ class RobotView extends View implements ISubject{
       
       
       //create/initialised the grid layout
-      
+      //mistakesn
       //add the main panle to the form
       this.getContentPane().add(jpnlContent);
   }
