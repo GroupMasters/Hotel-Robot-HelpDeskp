@@ -65,9 +65,12 @@ class RobotView extends View implements ISubject{
   public RobotView(String title)
   {
       
-      this.addWindowListener(new EventHandler(this));
+     
       this.setTitle(title);
       this.initGui();
+       this.addWindowListener(new EventHandler(this));
+      this.jbtnSendMessage.addActionListener(new EventHandler(this));
+      this.jtxtMessage.addActionListener(new EventHandler(this));
   }
   
   
@@ -152,6 +155,16 @@ class RobotView extends View implements ISubject{
     public void attach(IObserver observer) {
         controller = (RobotController) observer;
     }
+
+    void appendMessageDocument(String resultMessage) {
+        try
+        {
+            this.document.insertString(WIDTH, resultMessage+"\n", null);
+        }catch(Exception err)
+        {
+            
+        }
+       }
     
     
     
@@ -196,11 +209,21 @@ class RobotView extends View implements ISubject{
         public void actionPerformed(ActionEvent e) {
             if(RobotView.CMD_SEND_MESSAGE.equals(e.getActionCommand()))
             {
-                this.parent.controller.xhsSendMessage(this.parent.jtxtMessage.getText());
+                sendMessage();  
             }
+            else if(e.getSource().equals(this.parent.jtxtMessage))
+            {
+                 sendMessage();
+            }
+                
             
               }
-        
+       
+        private  void sendMessage()
+        {
+           this.parent.controller.xhsSendMessage(this.parent.jtxtMessage.getText());
+           this.parent.jtxtMessage.setText("");
+        }
     }
     
 }

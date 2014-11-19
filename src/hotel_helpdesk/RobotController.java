@@ -47,7 +47,23 @@ public class RobotController extends IObserver implements Controller {
     }
 
     void xhsSendMessage(String text) {
+        if(!text.isEmpty())
+        {
+            this.view.appendMessageDocument("Client: "+text);
+            // process the message in its own thread 
+            Thread thread = new Thread(){
+             public void run()
+             {
+                 model.processMessage(text);
+             }
+            };
+            thread.start();
+        }
         
-        this.view.setTitle(text);
-         }
+     }
+
+  synchronized  void  xhsResultMessgae(String resultMessage)
+    {
+        this.view.appendMessageDocument(resultMessage);
+    }
 }

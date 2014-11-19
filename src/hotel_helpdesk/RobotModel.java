@@ -17,5 +17,15 @@ class RobotModel implements ISubject {
     public void attach(IObserver observer) {
        controller = (RobotController) observer;
     }
+
+    void processMessage(String text) {
+        
+    //any string that comes here is a valid string not an empty message
+        // process the text and return feed back
+        
+        this.controller.xhsResultMessgae("Support: "+text);
+        
+    }
+       
     
 }
