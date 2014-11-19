@@ -45,4 +45,9 @@ public class RobotController extends IObserver implements Controller {
         this.view.dispose();
        System.exit(0);
     }
+
+    void xhsSendMessage(String text) {
+        
+        this.view.setTitle(text);
+         }
 }

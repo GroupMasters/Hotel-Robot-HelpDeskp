@@ -11,6 +11,8 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import javax.swing.Icon;
@@ -62,6 +64,8 @@ class RobotView extends View implements ISubject{
   
   public RobotView(String title)
   {
+      
+      this.addWindowListener(new EventHandler(this));
       this.setTitle(title);
       this.initGui();
   }
@@ -128,6 +132,18 @@ class RobotView extends View implements ISubject{
       gc.gridwidth =2;
       gc.insets= new Insets(LEFT,RIGHT,TOP,BOTTOM);
       this.jpnlContent.add(this.jtxtMessage,gc);
+      
+      //add the button
+       //add the text message field
+        gc.fill = GridBagConstraints.HORIZONTAL;
+      gc.gridx = 2;
+      gc.gridy=2;
+      gc.gridheight = 1;
+      gc.gridwidth =1;
+      gc.insets= new Insets(LEFT,RIGHT,TOP,BOTTOM);
+      this.jpnlContent.add(this.jbtnSendMessage,gc);
+      
+      
       //add the main panle to the form
       this.getContentPane().add(jpnlContent);
   }
@@ -139,7 +155,7 @@ class RobotView extends View implements ISubject{
     
     
     
-    private class EventHandler implements WindowListener
+    private class EventHandler implements WindowListener,ActionListener
     {
         RobotView parent;
        
@@ -175,6 +191,15 @@ class RobotView extends View implements ISubject{
         @Override
         public void windowDeactivated(WindowEvent e) {
             }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(RobotView.CMD_SEND_MESSAGE.equals(e.getActionCommand()))
+            {
+                this.parent.controller.xhsSendMessage(this.parent.jtxtMessage.getText());
+            }
+            
+              }
         
     }
     
