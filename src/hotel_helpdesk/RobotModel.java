@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package hotel_helpdesk;
+import java.util.StringTokenizer;
 import server.share.IObserver;
 import server.share.ISubject;
 /**
@@ -20,10 +21,10 @@ class RobotModel implements ISubject {
 
     void processMessage(String text) {
         
-    //any string that comes here is a valid string not an empty message
-        // process the text and return feed back
-        
-        this.controller.xhsResultMessgae("Support: "+text);
+        StringTokenizer tokenizer = new StringTokenizer(text);
+         
+       while(tokenizer.hasMoreTokens())        
+         this.controller.xhsResultMessgae("Support: "+tokenizer.nextToken());
         
     }
        
