@@ -6,6 +6,7 @@
 package hotel_helpdesk;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -61,12 +62,14 @@ class RobotView extends View implements ISubject{
   
   private void initGui()
   {
-      jtplMessages = new JTextPane();
+       jtplMessages = new JTextPane();
        jtplMessages.setPreferredSize(new Dimension(APP_WIDTH,APP_HEIGHT));
       document = new DefaultStyledDocument();      
       jtplMessages.setDocument(document);           
       this.jpnlContent = new JPanel(new GridBagLayout());
       this.jsrpl = new JScrollPane(jtplMessages);
+      this.toolbar= new JToolBar();
+      jpnlCommands= new JPanel(new FlowLayout());
       
       this.jgb= new GridBagLayout();
       GridBagConstraints gc= new GridBagConstraints();
@@ -74,16 +77,27 @@ class RobotView extends View implements ISubject{
       gc.gridx = 0;
       gc.gridy=0;
       gc.gridheight = 1;
+      gc.gridwidth =3;
+      gc.insets= new Insets(LEFT,RIGHT,TOP,BOTTOM);
+      this.jpnlContent.add(this.toolbar,gc);
+      //add the textpane
+      gc.fill = GridBagConstraints.HORIZONTAL;
+      gc.gridx = 0;
+      gc.gridy=1;
+      gc.gridheight = 1;
+      gc.gridwidth =2;
+      gc.insets= new Insets(LEFT,RIGHT,TOP,BOTTOM);
+      this.jpnlContent.add(this.jsrpl,gc);
+      
+      //add the right handside command buttons
+      
+      gc.fill = GridBagConstraints.HORIZONTAL;
+      gc.gridx = 3;
+      gc.gridy=1;
+      gc.gridheight = 1;
       gc.gridwidth =1;
       gc.insets= new Insets(LEFT,RIGHT,TOP,BOTTOM);
-      
-      this.jpnlContent.add(this.toolbar,gc);
-      
-      
-      
-      
-      
-      
+      this.jpnlContent.add(this.jpnlCommands,gc);
       
       //add the main panle to the form
       this.getContentPane().add(jpnlContent);

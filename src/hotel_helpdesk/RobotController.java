@@ -26,6 +26,8 @@ public class RobotController extends IObserver implements Controller {
     @Override
     public void launch() {
       this.view.setAlwaysOnTop(true);
+      this.view.pack();
+      this.view.setResizable(false);
         this.view.setVisible(true);
     }
 
