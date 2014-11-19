@@ -5,6 +5,8 @@
  */
 package hotel_helpdesk;
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -14,6 +16,8 @@ import server.share.IObserver;
 import server.share.View;
 import server.share.ISubject;
 import javax.swing.JTextPane;
+import javax.swing.text.DefaultStyledDocument;
+import javax.swing.text.StyledDocument;
 /**
  *
  * @author obaro
@@ -31,6 +35,14 @@ class RobotView extends View implements ISubject{
   private JButton jbtnDisconnect;
   private JButton jbtnCloseApp;
   
+  private GridBagLayout g;
+  private Font inputMessageFont ;
+  private StyledDocument document;
+  
+  //private statics
+  private static int APP_WIDTH =400;
+  private static int APP_HEIGHT =400;
+  
   
   
   public RobotView(String title)
@@ -43,12 +55,17 @@ class RobotView extends View implements ISubject{
   private void initGui()
   {
       jtplMessages = new JTextPane();
+       jtplMessages.setPreferredSize(new Dimension(APP_WIDTH,APP_HEIGHT));
+      document = new DefaultStyledDocument();      
+      jtplMessages.setDocument(document);
+      
+      
       this.jpnlContent = new JPanel(new GridBagLayout());
       this.jsrpl = new JScrollPane(jtplMessages);
       
       
       //create/initialised the grid layout
-      //mistakesn
+      
       //add the main panle to the form
       this.getContentPane().add(jpnlContent);
   }
