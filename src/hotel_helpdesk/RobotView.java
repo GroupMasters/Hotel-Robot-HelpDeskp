@@ -11,6 +11,9 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -27,6 +30,10 @@ import javax.swing.text.StyledDocument;
  * @author obaro
  */
 class RobotView extends View implements ISubject{
+    private static String CMD_SEND_MESSAGE="Send";
+    private static String CMD_CLEAR_SCREEN ="Clear";
+    private static String CMD_DISCONNECT_APP= "Disconnect";
+    private static String CMD_CLOSE_APPLICATION="Exit Application";
   private RobotController controller ;
   private JTextPane jtplMessages;
   private GridBagLayout jgb ;
@@ -35,7 +42,7 @@ class RobotView extends View implements ISubject{
   private JPanel jpnlContent;
   private JTextField jtxtMessage;
   private JButton jbtnSendMessage;
-  private JButton jbtnClear;
+  private JButton btnSettings;
   private JButton jbtnDisconnect;
   private JButton jbtnCloseApp;
   
@@ -62,7 +69,8 @@ class RobotView extends View implements ISubject{
   
   private void initGui()
   {
-       jtplMessages = new JTextPane();
+      inputMessageFont= new Font(Font.SERIF,Font.PLAIN,15);
+      jtplMessages = new JTextPane();
        jtplMessages.setPreferredSize(new Dimension(APP_WIDTH,APP_HEIGHT));
       document = new DefaultStyledDocument();      
       jtplMessages.setDocument(document);           
@@ -70,6 +78,18 @@ class RobotView extends View implements ISubject{
       this.jsrpl = new JScrollPane(jtplMessages);
       this.toolbar= new JToolBar();
       jpnlCommands= new JPanel(new FlowLayout());
+      this.jbtnSendMessage = new JButton(RobotView.CMD_SEND_MESSAGE);
+      this.btnSettings = new JButton(RobotView.CMD_CLEAR_SCREEN);
+      this.jbtnCloseApp= new JButton(RobotView.CMD_CLOSE_APPLICATION);
+      this.jbtnDisconnect = new JButton(RobotView.CMD_DISCONNECT_APP);
+      this.jtxtMessage= new JTextField();
+      this.jtxtMessage.setFont(inputMessageFont);
+      
+      //add the buttons to the button panel
+      
+     
+      
+      
       
       this.jgb= new GridBagLayout();
       GridBagConstraints gc= new GridBagConstraints();
@@ -99,6 +119,15 @@ class RobotView extends View implements ISubject{
       gc.insets= new Insets(LEFT,RIGHT,TOP,BOTTOM);
       this.jpnlContent.add(this.jpnlCommands,gc);
       
+      
+      //add the text message field
+        gc.fill = GridBagConstraints.HORIZONTAL;
+      gc.gridx = 0;
+      gc.gridy=2;
+      gc.gridheight = 1;
+      gc.gridwidth =2;
+      gc.insets= new Insets(LEFT,RIGHT,TOP,BOTTOM);
+      this.jpnlContent.add(this.jtxtMessage,gc);
       //add the main panle to the form
       this.getContentPane().add(jpnlContent);
   }
@@ -106,6 +135,47 @@ class RobotView extends View implements ISubject{
     @Override
     public void attach(IObserver observer) {
         controller = (RobotController) observer;
+    }
+    
+    
+    
+    private class EventHandler implements WindowListener
+    {
+        RobotView parent;
+       
+        EventHandler(RobotView view)
+        {
+            this.parent=view;
+        }
+        @Override
+        public void windowOpened(WindowEvent e) {
+                }
+
+        @Override
+        public void windowClosing(WindowEvent e) {
+            this.parent.controller.xhsCloseHelpWindow();
+             }
+
+        @Override
+        public void windowClosed(WindowEvent e) {
+               }
+
+        @Override
+        public void windowIconified(WindowEvent e) {
+         }
+
+        @Override
+        public void windowDeiconified(WindowEvent e) {
+            }
+
+        @Override
+        public void windowActivated(WindowEvent e) {
+           }
+
+        @Override
+        public void windowDeactivated(WindowEvent e) {
+            }
+        
     }
     
 }
