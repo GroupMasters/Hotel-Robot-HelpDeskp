@@ -12,8 +12,8 @@ import server.share.IObserver;
  * @author obaro
  */
 public class RobotController extends IObserver implements Controller {
-    private RobotModel model;
-    private RobotView view;
+    private final RobotModel model;
+    private final RobotView view;
     
     public RobotController(RobotModel amodel, RobotView aview)
     {
