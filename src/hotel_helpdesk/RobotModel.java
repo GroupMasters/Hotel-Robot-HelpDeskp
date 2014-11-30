@@ -4,11 +4,13 @@
  * and open the template in the editor.
  */
 package hotel_helpdesk;
+
 import java.util.StringTokenizer;
 import server.share.IObserver;
 import server.share.ISubject;
 import java.util.Vector;
 import javax.swing.text.Style;
+
 /**
  *
  * @author obaro
@@ -17,35 +19,36 @@ class RobotModel implements ISubject {
 
     private RobotController controller;
     private Vector<String> conversations;
-    final String RobotStart="<font color='red'><b>Robot: </b></font>:",
-    UserStart="<font color='blue'><b>You: </b></font>";
-     RobotModel()
-     {
-         conversations= new Vector<String>(); 
-         
-          conversations.add("<i>Connecting to server...</i><br>");
-          conversations.add("<i>Connection established successfully.</i><br>");
-          conversations.add("<i>Tranfering you to an online supported [Robot] .</i><br>");
-         conversations.add(RobotStart+" How may I help you please!");
-     }
-    @Override
-    public void attach(IObserver observer) {
-       controller = (RobotController) observer;         
+    final String RobotStart = "<font color='red'><b>Robot: </b></font>:",
+            UserStart = "<font color='blue'><b>You: </b></font>";
+
+    RobotModel() {
+        conversations = new Vector<String>();
+
+        conversations.add("<i>Connecting to server...</i><br>");
+        conversations.add("<i>Connection established successfully.</i><br>");
+        conversations.add("<i>Tranfering you to an online supported [Robot] .</i><br>");
+        conversations.add(RobotStart + " How may I help you please!");
     }
 
-    void processMessage(String text) {        
-       StringTokenizer tokenizer = new StringTokenizer(text); 
-      
-    // finished processs the message call the controller results to display to the user
-       this.conversations.add("<br>"+UserStart +text+"\n");
-     
-       
+    @Override
+    public void attach(IObserver observer) {
+        controller = (RobotController) observer;
     }
-   public Vector<String> getConversations()
-    {
-      if(this.conversations==null)
-        return null;
-      return conversations;
+
+    void processMessage(String text) {
+        StringTokenizer tokenizer = new StringTokenizer(text);
+
+        // finished processs the message call the controller results to display to the user
+        this.conversations.add("<br>" + UserStart + text + "\n");
+
     }
-    
+
+    public Vector<String> getConversations() {
+        if (this.conversations == null) {
+            return null;
+        }
+        return conversations;
+    }
+
 }

@@ -82,16 +82,16 @@ class RobotView extends View implements ISubject {
     private void initGui() {
         inputMessageFont = new Font(Font.SERIF, Font.PLAIN, 15);
         jtplMessages = new JEditorPane();
-        jtplMessages.setPreferredSize(new Dimension(APP_WIDTH, APP_HEIGHT));              
+        jtplMessages.setPreferredSize(new Dimension(APP_WIDTH, APP_HEIGHT));
         jtplMessages.setContentType("text/html");
-       
+
         this.jpnlContent = new JPanel(new GridBagLayout());
         this.jsrpl = new JScrollPane(jtplMessages);
         this.jsrpl.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-	this.jsrpl.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-	this.jsrpl.setBorder(BorderFactory.createTitledBorder("Conversation:"));
-	this.jsrpl.getViewport().setPreferredSize(new Dimension(500,400));
-        
+        this.jsrpl.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        this.jsrpl.setBorder(BorderFactory.createTitledBorder("Conversation:"));
+        this.jsrpl.getViewport().setPreferredSize(new Dimension(500, 400));
+
         this.toolbar = new JToolBar();
         jpnlCommands = new JPanel(new FlowLayout());
         this.jbtnSendMessage = new JButton(RobotView.CMD_SEND_MESSAGE);
@@ -101,7 +101,7 @@ class RobotView extends View implements ISubject {
         this.jtxtMessage = new JTextField();
         this.jtxtMessage.setFont(inputMessageFont);
 
-      //add the buttons to the button panel
+        //add the buttons to the button panel
         this.jgb = new GridBagLayout();
         GridBagConstraints gc = new GridBagConstraints();
         gc.fill = GridBagConstraints.HORIZONTAL;
@@ -120,7 +120,7 @@ class RobotView extends View implements ISubject {
         gc.insets = new Insets(LEFT, RIGHT, TOP, BOTTOM);
         this.jpnlContent.add(this.jsrpl, gc);
 
-      //add the right handside command buttons
+        //add the right handside command buttons
         gc.fill = GridBagConstraints.HORIZONTAL;
         gc.gridx = 3;
         gc.gridy = 1;
@@ -138,7 +138,7 @@ class RobotView extends View implements ISubject {
         gc.insets = new Insets(LEFT, RIGHT, TOP, BOTTOM);
         this.jpnlContent.add(this.jtxtMessage, gc);
 
-      //add the button
+        //add the button
         //add the text message field
         gc.fill = GridBagConstraints.HORIZONTAL;
         gc.gridx = 2;
@@ -150,8 +150,7 @@ class RobotView extends View implements ISubject {
 
         //add the main panle to the form
         this.getContentPane().add(jpnlContent);
-       
-   
+
     }
 
     @Override
@@ -159,25 +158,25 @@ class RobotView extends View implements ISubject {
         controller = (RobotController) observer;
     }
 
-   
-
     void updateConversations(Vector<String> conversations) {
-        if(conversations ==null)
-            return ;
-        Iterator<String> iter=conversations.iterator() ;
-        String strConversations="";
-       while(iter.hasNext()) {
-           strConversations +=iter.next();
+        if (conversations == null) {
+            return;
+        }
+        Iterator<String> iter = conversations.iterator();
+        String strConversations = "";
+        while (iter.hasNext()) {
+            strConversations += iter.next();
         }
         this.jtplMessages.setText(strConversations);
         scroll();
     }
- private void scroll()
- {
-   
- }
-void clearConversation() {
-       this.jtplMessages.setText("");
+
+    private void scroll() {
+
+    }
+
+    void clearConversation() {
+        this.jtplMessages.setText("");
     }
 
     private class EventHandler implements WindowListener, ActionListener {
@@ -228,7 +227,7 @@ void clearConversation() {
         }
 
         private void sendMessage() {
-            
+
             this.parent.controller.xhsSendMessage(this.parent.jtxtMessage.getText());
             this.parent.jtxtMessage.setText("");
         }

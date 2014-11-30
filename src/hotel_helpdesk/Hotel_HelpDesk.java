@@ -16,9 +16,9 @@ public class Hotel_HelpDesk {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        RobotController controller = new  RobotController (new RobotModel(), new RobotView("Hotel Help Desk"));
+        RobotController controller = new RobotController(new RobotModel(), new RobotView("Hotel Help Desk"));
         controller.launch();
-        
+
     }
-    
+
 }
