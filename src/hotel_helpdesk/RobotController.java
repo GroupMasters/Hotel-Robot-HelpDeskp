@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package hotel_helpdesk;
+import java.util.Vector;
 import server.share.Controller;
 import server.share.ISubject;
 import server.share.IObserver;
@@ -21,6 +22,7 @@ public class RobotController extends IObserver implements Controller {
         this.view =aview;
         this.view.attach(this);
         this.model.attach(this);
+       
     }
 
     @Override
@@ -28,7 +30,10 @@ public class RobotController extends IObserver implements Controller {
       this.view.setAlwaysOnTop(true);
       this.view.pack();
       this.view.setResizable(false);
-        this.view.setVisible(true);
+      Vector<String> con= (Vector<String>)this.model.getConversations();
+      
+     view.updateConversations(con);
+     this.view.setVisible(true);
     }
 
     @Override
@@ -49,12 +54,13 @@ public class RobotController extends IObserver implements Controller {
     void xhsSendMessage(String text) {
         if(!text.isEmpty())
         {
-            this.view.appendMessageDocument("Client: "+text);
-            // process the message in its own thread 
+            this.view.clearConversation();
+           //process the message in its own thread 
             Thread thread = new Thread(){
              public void run()
              {
                  model.processMessage(text);
+               
              }
             };
             thread.start();
@@ -62,8 +68,8 @@ public class RobotController extends IObserver implements Controller {
         
      }
 
-  synchronized  void  xhsResultMessgae(String resultMessage)
-    {
-        this.view.appendMessageDocument(resultMessage);
+  synchronized  void  xhsResultMessgae(int i)
+    {//return the result conversations
+        view.updateConversations(model.getConversations());
     }
 }
