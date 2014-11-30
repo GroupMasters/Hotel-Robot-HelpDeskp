@@ -22,6 +22,7 @@ public class RobotController extends IObserver implements Controller {
         this.view =aview;
         this.view.attach(this);
         this.model.attach(this);
+       this.view.updateConversations(this.model.getConversations());
        
     }
 
@@ -30,9 +31,7 @@ public class RobotController extends IObserver implements Controller {
       this.view.setAlwaysOnTop(true);
       this.view.pack();
       this.view.setResizable(false);
-      Vector<String> con= (Vector<String>)this.model.getConversations();
-      
-     view.updateConversations(con);
+ 
      this.view.setVisible(true);
     }
 
@@ -56,20 +55,11 @@ public class RobotController extends IObserver implements Controller {
         {
             this.view.clearConversation();
            //process the message in its own thread 
-            Thread thread = new Thread(){
-             public void run()
-             {
-                 model.processMessage(text);
-               
-             }
-            };
-            thread.start();
+            model.processMessage(text);
+            this.view.updateConversations(this.model.getConversations());
         }
         
      }
 
-  synchronized  void  xhsResultMessgae(int i)
-    {//return the result conversations
-        view.updateConversations(model.getConversations());
-    }
+ 
 }

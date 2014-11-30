@@ -17,10 +17,16 @@ class RobotModel implements ISubject {
 
     private RobotController controller;
     private Vector<String> conversations;
+    final String RobotStart="<font color='red'><b>Robot: </b></font>:",
+    UserStart="<font color='blue'><b>You: </b></font>";
      RobotModel()
      {
          conversations= new Vector<String>(); 
-         conversations.add("Support: How may I help you?");
+         
+          conversations.add("<i>Connecting to server...</i><br>");
+          conversations.add("<i>Connection established successfully.</i><br>");
+          conversations.add("<i>Tranfering you to an online supported [Robot] .</i><br>");
+         conversations.add(RobotStart+" How may I help you please!");
      }
     @Override
     public void attach(IObserver observer) {
@@ -28,14 +34,11 @@ class RobotModel implements ISubject {
     }
 
     void processMessage(String text) {        
-        StringTokenizer tokenizer = new StringTokenizer(text);         
-       while(tokenizer.hasMoreTokens())
-       {
-           //process the language (NLP)
-           
-       }
+       StringTokenizer tokenizer = new StringTokenizer(text); 
+      
     // finished processs the message call the controller results to display to the user
-       this.controller.xhsResultMessgae(1);
+       this.conversations.add("<br>"+UserStart +text+"\n");
+     
        
     }
    public Vector<String> getConversations()
