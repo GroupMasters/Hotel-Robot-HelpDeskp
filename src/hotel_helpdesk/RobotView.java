@@ -17,6 +17,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import javax.swing.Icon;
 import javax.swing.JButton;
+import javax.swing.JEditorPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -37,7 +38,7 @@ class RobotView extends View implements ISubject{
     private static String CMD_DISCONNECT_APP= "Disconnect";
     private static String CMD_CLOSE_APPLICATION="Exit Application";
   private RobotController controller ;
-  private JTextPane jtplMessages;
+  private JEditorPane jtplMessages;
   private GridBagLayout jgb ;
   private JScrollPane jsrpl;
   private JPanel jpnlCommands;
@@ -77,7 +78,7 @@ class RobotView extends View implements ISubject{
   private void initGui()
   {
       inputMessageFont= new Font(Font.SERIF,Font.PLAIN,15);
-      jtplMessages = new JTextPane();
+      jtplMessages = new JEditorPane();
        jtplMessages.setPreferredSize(new Dimension(APP_WIDTH,APP_HEIGHT));
       document = new DefaultStyledDocument();      
       jtplMessages.setDocument(document);           
