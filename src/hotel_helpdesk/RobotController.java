@@ -57,9 +57,13 @@ public class RobotController extends IObserver implements Controller {
             this.view.clearConversation();
             //process the message in its own thread 
             model.processMessage(text);
-            this.view.updateConversations(this.model.getConversations());
+            
         }
 
     }
+
+    void xhsUpdateMessageBoard() {
+         this.view.updateConversations(this.model.getConversations());
+         }
 
 }

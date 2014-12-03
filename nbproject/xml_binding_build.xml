@@ -19,8 +19,8 @@
             </classpath>
             <arg value="-xmlschema"/>
             <arg value="-verbose"/>
-            <schema file="xml-resources/jaxb/hoteldata/hotel_schema.xsd"/>
-            <depends file="xml-resources/jaxb/hoteldata/hotel_schema.xsd"/>
+            <schema file="xml-resources/jaxb/hoteldata/hotel_data.xsd"/>
+            <depends file="xml-resources/jaxb/hoteldata/hotel_data.xsd"/>
             <produces dir="build/generated/jaxbCache/hoteldata"/>
         </xjc>
         <copy todir="${build.generated.sources.dir}/jaxb">

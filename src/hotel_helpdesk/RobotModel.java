@@ -14,16 +14,17 @@ import java.util.Vector;
  *
  * @author obaro
  */
-class RobotModel implements ISubject {
+class RobotModel extends Object implements ISubject {
 
     private RobotController controller;
     private Vector<String> conversations;
+    private RobotBrain brain;
     final String RobotStart = "<font color='red'><b>Robot: </b></font>:",
             UserStart = "<font color='blue'><b>You: </b></font>";
 
     RobotModel() {
         conversations = new Vector<String>();
-
+         brain= new RobotBrain(this);
         conversations.add("<i>Connecting to server...</i><br>");
         conversations.add("<i>Connection established successfully.</i><br>");
         conversations.add("<i>Tranfering you to an online supported [Robot] .</i><br>");
@@ -39,8 +40,13 @@ class RobotModel implements ISubject {
         StringTokenizer tokenizer = new StringTokenizer(text);
 
         // finished processs the message call the controller results to display to the user
-        this.conversations.add("<br>" + UserStart + text + "\n");
-
+        this.conversations.add("<br>" + UserStart + text );
+        this.brain.analysis(tokenizer);
+        String result = this.brain.getAnalysisAnswer();
+        this.conversations.add("<br>" + RobotStart +  result );       
+        this.controller.xhsUpdateMessageBoard();
+        
+      
     }
 
     public Vector<String> getConversations() {
