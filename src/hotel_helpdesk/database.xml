@@ -7,6 +7,17 @@ and open the template in the editor.
 
 
 <hotel>
+    <name> Jason's & Sons Hotel </name>
+    <description > Jason's & Sons Hotel was established in 1987 by Jimobama know ja sons. </description>
     
+    <rooms>
+        
+    </rooms>
+    <bookings>
+        
+    </bookings>
+    <customers>
+        
+    </customers>
     
 </hotel>
