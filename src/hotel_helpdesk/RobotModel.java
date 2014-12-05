@@ -28,7 +28,9 @@ class RobotModel extends Object implements ISubject {
         conversations.add("<i>Connecting to server...</i><br>");
         conversations.add("<i>Connection established successfully.</i><br>");
         conversations.add("<i>Tranfering you to an online supported [Robot] .</i><br>");
-        conversations.add(RobotStart + " How may I help you please!");
+     
+        this.helpType();
+        
     }
 
     @Override
@@ -63,6 +65,16 @@ class RobotModel extends Object implements ISubject {
             return null;
         }
         return conversations;
+    }
+
+    private void helpType() {
+       conversations.add(RobotStart + " How may I help you please!\n");
+       conversations.add("\n1- I can help on the following information .<br>");
+       conversations.add("\n1-The hotel .<br>");
+       conversations.add("\n2 - The Available Rooms .<br>");
+       conversations.add("\n2 - The booking list .<br>");
+      
+      
     }
 
 }

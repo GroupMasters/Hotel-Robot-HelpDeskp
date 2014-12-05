@@ -75,6 +75,8 @@ class RobotBrain {
         AmountsSym.add("price");
         AmountsSym.add("costs");
         AmountsSym.add("prices");
+         AmountsSym.add("information");
+          AmountsSym.add("informations");
         // keywords towards rooms concepts
 
         roomSym.add("rooms");
@@ -91,6 +93,7 @@ class RobotBrain {
         //keyowrds towards booking
         bookingSym.add("book");
         bookingSym.add("bookings");
+         bookingSym.add("booking");
         bookingSym.add("reservations");
         bookingSym.add("reserve");
         bookingSym.add("reserves");
@@ -440,12 +443,13 @@ class RobotBrain {
         }
         private void getHotelDetails() {
         
-        this.answer=" The details about the hotel\n";
+        this.answer=" <center><font color='blue' size='14' > The Hotel Details</font></center>\n";
         }
 
         private void getBookings() {
             this.bookings=  this.theHotel.getBookingInfo();
-           this.answer = "<table> <tr><th>Booking ID</th><th>Room Number</th> <th>Customer ID</th>"
+            this.answer=" <center><font color='blue' size='14' > Booking Informations</font></center>\n";
+           this.answer += "<table> <tr><th>Booking ID</th><th>Room Number</th> <th>Customer ID</th>"
                    + "<th>Description</th> <th>Status</th><th>Booked Date</th> </tr>";
                       
            Iterator<BookingInfo> iter = this.bookings.iterator();
@@ -463,8 +467,8 @@ class RobotBrain {
 
         private void getRobotInformation() {
             this.supporters= theHotel.get_0020Supporter();
-            this.answer=" Robot informations\n";
-        }
+            this.answer="Well! I am a robot and I am here to help you!\n I'm not allow to tell you any thing more  than this!\n";
+         }
 
         private void error() {
             
