@@ -10,17 +10,12 @@ and open the template in the editor.
            elementFormDefault="qualified">
     
     <xs:element name="rate" type="RateInteger" />
-    <xs:element name="room" type="RoomInfo" />    
+    <xs:element name="room" type="Room" />    
     <xs:element name="bookingInfo" type="BookingInfo" />
     <xs:element name="hotelInfo" type="HotelInfo" />
     
     
-    <xs:complexType name="HotelInfo">
-        <xs:sequence>
-            <xs:element name="name" type="xs:string"/> 
-            <xs:element name="descriptions" type="xs:string"/> 
-        </xs:sequence>
-    </xs:complexType>
+    
     
     <xs:simpleType name="RateInteger">
         <xs:restriction base="xs:integer">
@@ -32,7 +27,7 @@ and open the template in the editor.
 
     <!-- The room entity-->
     
-        <xs:complexType name="RoomInfo">
+        <xs:complexType name="Room">
             <xs:sequence> 
                 <xs:element name="roomNumber" type="xs:string" />
                 <xs:element name="type" type="xs:string" />             
@@ -52,6 +47,13 @@ and open the template in the editor.
             </xs:sequence>
       </xs:complexType>        
   
-   
+   <xs:complexType name="HotelInfo">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/> 
+            <xs:element name="descriptions" type="xs:string"/> 
+           <!-- Holding a list of objects-->
+            <xs:element maxOccurs="unbounded" name="Room" type="Room" />	
+        </xs:sequence>
+    </xs:complexType>
 
 </xs:schema>

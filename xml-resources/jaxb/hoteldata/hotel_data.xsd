@@ -13,12 +13,13 @@ and open the template in the editor.
     <xs:element name="room" type="Room" />    
     <xs:element name="bookingInfo" type="BookingInfo" />
     <xs:element name="hotelInfo" type="HotelInfo" />
+    <xs:element name="supporter" type="Supporter" />
     
     
-    <xs:complexType name="HotelInfo">
+    <xs:complexType name="Supporter">
         <xs:sequence>
-            <xs:element name="name" type="xs:string"/> 
-            <xs:element name="descriptions" type="xs:string"/> 
+            <xs:element name="name" type="xs:string" />  
+             <xs:element name="positions" type="xs:string" /> 
         </xs:sequence>
     </xs:complexType>
     
@@ -52,6 +53,15 @@ and open the template in the editor.
             </xs:sequence>
       </xs:complexType>        
   
-   
+   <xs:complexType name="HotelInfo">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/> 
+            <xs:element name="descriptions" type="xs:string"/> 
+            <!--Hold object lists  -->
+              <xs:element maxOccurs="unbounded" name="BookingInfo" type="BookingInfo" />
+              <xs:element maxOccurs="unbounded" name="Room" type="Room" />
+              <xs:element maxOccurs="unbounded" name=" Supporter" type="Supporter" />             
+        </xs:sequence>
+    </xs:complexType>
 
 </xs:schema>
