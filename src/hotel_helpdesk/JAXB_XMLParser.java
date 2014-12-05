@@ -10,11 +10,17 @@ import javax.xml.bind.*;
  *
  * @author obaro
  */
+
+
+
+
 public class JAXB_XMLParser {
-   private JAXBContext jaxbContext = null;  											   
-	private Unmarshaller unmarshaller = null;  											
+
+	private JAXBContext jaxbContext = null;     // generate a context to work in with JAXB											   
+	private Unmarshaller unmarshaller = null;   // unmarshall = genrate objects from an xml file												
 	
-	
+	// This is a candidate for a name change because you wont deal with a library any more in your conversion
+	private HotelInfo myhotel = null;            // the main object containing all data
 
 	public JAXB_XMLParser() {
 
@@ -26,5 +32,26 @@ public class JAXB_XMLParser {
 		}
 	}
 	
-	
+	// Instance objects and return a list with this objects in it
+	public HotelInfo loadXML(InputStream fileinputstream) {
+
+		try {
+			Object xmltoobject = unmarshaller.unmarshal(fileinputstream);
+
+			if (myhotel == null) {
+
+				// generate the mynewlib object that conatins all info from the xml document
+				myhotel= (HotelInfo) (((JAXBElement) xmltoobject).getValue());
+				// The above (Library) is a candidate for a name change because you wont deal with 
+				// a library any more in your conversion
+				
+				return myhotel; // return Library Objekt
+			}
+		} // try
+
+		catch (JAXBException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

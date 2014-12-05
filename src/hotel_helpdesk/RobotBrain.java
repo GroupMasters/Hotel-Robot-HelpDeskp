@@ -5,6 +5,8 @@
  */
 package hotel_helpdesk;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.StringTokenizer;
@@ -367,9 +369,22 @@ class RobotBrain {
 
         private String answer;
 
+		private JAXB_XMLParser xmlhandler; // we need an instance of our parser
+		//This is a candidate for a name change
+		private File xmlfiletoload; // we need a (CURRENT)  file (xml) to load  
+                private  HotelInfo theHotel;
         public QueryClass(int task) {
             answer = "";
+            theHotel= new HotelInfo();
+            xmlhandler = new JAXB_XMLParser();
+            xmlfiletoload = new File("database.xml");
             setQuestionType(task);
+            try{
+            FileInputStream readthatfile = new FileInputStream(xmlfiletoload); // initiate input stream
+	    theHotel = xmlhandler.loadXML(readthatfile);
+            }catch(Exception err)
+            {
+            }
 
         }
 

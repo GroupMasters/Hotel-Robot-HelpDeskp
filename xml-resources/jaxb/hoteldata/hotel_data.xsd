@@ -56,6 +56,7 @@ and open the template in the editor.
    <xs:complexType name="HotelInfo">
         <xs:sequence>
             <xs:element name="name" type="xs:string"/> 
+            <xs:element name="numberOfRooms" type="xs:integer"/> 
             <xs:element name="descriptions" type="xs:string"/> 
             <!--Hold object lists  -->
               <xs:element maxOccurs="unbounded" name="BookingInfo" type="BookingInfo" />
