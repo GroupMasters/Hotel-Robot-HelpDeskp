@@ -413,9 +413,6 @@ class RobotBrain {
         private void getAvaliableRooms() {
           this.answer=" The follow is the list of all the rooms avaliable\n";
         }
-
-      
-
         private void getHotelDetails() {
         this.answer=" The details about the hotel\n";
         }
