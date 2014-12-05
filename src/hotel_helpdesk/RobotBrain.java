@@ -31,7 +31,15 @@ class RobotBrain {
     private static int CONTEXT_ABOUT_BOOKING = 0;
     private static int CONTEXT_REFERENCE = 0;
     private static int ValidQuestionCount = 0;
-
+    
+    //query variable
+   private final static  int AVALIABLE_ROOMS=1;
+   private final static int ALLROOMS_LIST=2;
+   private final static int HOTEL_INFO=3;
+   private final static int BOOKING_LIST=4;
+   private final static int ROBOT_INFO=5;
+   
+    
     RobotBrain(Object parent) {
         strResults = "no answer";
         roomSym = new ArrayList<String>();
@@ -298,9 +306,71 @@ class RobotBrain {
      2. How many rooms are avaliable
      3. display rooms of that are less than 100 pounds
     
-    
      */
     private class QueryClass {
+        private String answer;
+       public QueryClass(int task)
+        {
+            this.analysis(task);
+        }
+       
+       public String getAnswer()
+       {
+           return answer;
+       }
 
+        private void analysis(int task) {
+            switch(task)
+            {
+                case RobotBrain.AVALIABLE_ROOMS:
+                  getAvaliableRooms();
+                    break;
+                case RobotBrain.ALLROOMS_LIST:
+                    getAllRoomsDetails();
+                    break;
+                case RobotBrain.HOTEL_INFO:
+                    getHotelDetails();
+                    break;
+                case RobotBrain.BOOKING_LIST:
+                    getBookings();
+                    break;
+                case RobotBrain.ROBOT_INFO:
+                    getRobotInformation();
+                    break;
+                    default:
+                        error();
+                        break;                 
+                 
+            }
+       }
+        
+        //The Xml file questies here
+        
+        private void getAvaliableRooms()
+        {
+            
+        }
+        private void getAllRoomsDetails()
+        {
+           
+        }
+        private void getHotelDetails()
+        {
+        
+        }
+        
+        private void getBookings()
+        {
+            
+        }
+        private void getRobotInformation()
+        {
+            
+        }
+        private void error()
+        {
+            
+        }
+        
     }
 }

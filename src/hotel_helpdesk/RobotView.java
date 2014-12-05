@@ -50,7 +50,7 @@ class RobotView extends View implements ISubject {
     private JEditorPane jtplMessages;
     private GridBagLayout jgb;
     private JScrollPane jsrpl;
-    private JPanel jpnlCommands;
+    private JPanel pnlMessageInput;
     private JPanel jpnlContent;
     private JTextField jtxtMessage;
     private JButton jbtnSendMessage;
@@ -93,12 +93,12 @@ class RobotView extends View implements ISubject {
         this.jsrpl.getViewport().setPreferredSize(new Dimension(500, 400));
 
         this.toolbar = new JToolBar();
-        jpnlCommands = new JPanel(new FlowLayout());
+        pnlMessageInput = new JPanel(new FlowLayout());
         this.jbtnSendMessage = new JButton(RobotView.CMD_SEND_MESSAGE);
         this.btnSettings = new JButton(RobotView.CMD_CLEAR_SCREEN);
         this.jbtnCloseApp = new JButton(RobotView.CMD_CLOSE_APPLICATION);
         this.jbtnDisconnect = new JButton(RobotView.CMD_DISCONNECT_APP);
-        this.jtxtMessage = new JTextField();
+        this.jtxtMessage = new JTextField(40);
         this.jtxtMessage.setFont(inputMessageFont);
 
         //add the buttons to the button panel
@@ -108,7 +108,7 @@ class RobotView extends View implements ISubject {
         gc.gridx = 0;
         gc.gridy = 0;
         gc.gridheight = 1;
-        gc.gridwidth = 3;
+        gc.gridwidth = 2;
         gc.insets = new Insets(LEFT, RIGHT, TOP, BOTTOM);
         this.jpnlContent.add(this.toolbar, gc);
         //add the textpane
@@ -120,33 +120,34 @@ class RobotView extends View implements ISubject {
         gc.insets = new Insets(LEFT, RIGHT, TOP, BOTTOM);
         this.jpnlContent.add(this.jsrpl, gc);
 
-        //add the right handside command buttons
+        
+        
+        
+         //add the text message field
         gc.fill = GridBagConstraints.HORIZONTAL;
-        gc.gridx = 3;
-        gc.gridy = 1;
-        gc.gridheight = 1;
-        gc.gridwidth = 1;
+        gc.gridx = 0;
+        gc.gridy = 0;
         gc.insets = new Insets(LEFT, RIGHT, TOP, BOTTOM);
-        this.jpnlContent.add(this.jpnlCommands, gc);
+        this.pnlMessageInput.add(this.jtxtMessage, gc);
 
+        //add the button
         //add the text message field
+        gc.fill = GridBagConstraints.HORIZONTAL;
+        gc.gridx = 1;
+        gc.gridy = 0;
+        gc.insets = new Insets(LEFT, RIGHT, TOP, BOTTOM);
+        this.pnlMessageInput.add(this.jbtnSendMessage, gc);
+        
+        //add the right handside command buttons
         gc.fill = GridBagConstraints.HORIZONTAL;
         gc.gridx = 0;
         gc.gridy = 2;
         gc.gridheight = 1;
         gc.gridwidth = 2;
         gc.insets = new Insets(LEFT, RIGHT, TOP, BOTTOM);
-        this.jpnlContent.add(this.jtxtMessage, gc);
+        this.jpnlContent.add(this.pnlMessageInput, gc);
 
-        //add the button
-        //add the text message field
-        gc.fill = GridBagConstraints.HORIZONTAL;
-        gc.gridx = 2;
-        gc.gridy = 2;
-        gc.gridheight = 1;
-        gc.gridwidth = 1;
-        gc.insets = new Insets(LEFT, RIGHT, TOP, BOTTOM);
-        this.jpnlContent.add(this.jbtnSendMessage, gc);
+      
 
         //add the main panle to the form
         this.getContentPane().add(jpnlContent);
