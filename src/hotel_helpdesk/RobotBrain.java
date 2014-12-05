@@ -466,8 +466,9 @@ class RobotBrain {
         }
 
         private void getRobotInformation() {
+            
             this.supporters= theHotel.get_0020Supporter();
-            this.answer="Well! I am a robot and I am here to help you!\n I'm not allow to tell you any thing more  than this!\n";
+            this.answer+="Well! I am a robot and I am here to help you!\n I'm not allow to tell you any thing more  than this!\n";
          }
 
         private void error() {
