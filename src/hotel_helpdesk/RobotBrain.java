@@ -57,7 +57,7 @@ class RobotBrain {
         referenquestions = new ArrayList<String>();
         //this will get the keyword word to rearrange the semantic meaning
         QueryTypeList = new ArrayList<String>();
-        query = new QueryClass(question_type,this);
+        query = new QueryClass(question_type, this);
         this.init();
     }
 
@@ -75,8 +75,8 @@ class RobotBrain {
         AmountsSym.add("price");
         AmountsSym.add("costs");
         AmountsSym.add("prices");
-         AmountsSym.add("information");
-          AmountsSym.add("informations");
+        AmountsSym.add("information");
+        AmountsSym.add("informations");
         // keywords towards rooms concepts
 
         roomSym.add("rooms");
@@ -93,7 +93,7 @@ class RobotBrain {
         //keyowrds towards booking
         bookingSym.add("book");
         bookingSym.add("bookings");
-         bookingSym.add("booking");
+        bookingSym.add("booking");
         bookingSym.add("reservations");
         bookingSym.add("reserve");
         bookingSym.add("reserves");
@@ -159,7 +159,7 @@ class RobotBrain {
 
         }
 
-        // Find the semantic meaning of the user setences      
+        // Find the semantic meaning of the user setences
         this.analysis();
 
     }
@@ -191,12 +191,11 @@ class RobotBrain {
         if (isAmbiguous) {
             //handler and suggest question for customer or guest
             this.detectedQuestionFocus();
-           
 
         } else if (isValidFocusQuestion(question_focus)) {
             this.detectedQuestionFocus();
         } else {
-             
+
             this.detectedQuestionFocus();
             RobotBrain.ValidQuestionCount += 1;
         }
@@ -356,7 +355,7 @@ class RobotBrain {
         } else {
             IS_SOMETHING_OUT = false;
             decision();
-            // the question did not mention mention list or count            
+            // the question did not mention mention list or count
         }
     }
 
@@ -365,38 +364,37 @@ class RobotBrain {
 
     /*
      The query class , that will return answer base on the user questions
-     like 
-     1. display all rooms 
+     like
+     1. display all rooms
      2. How many rooms are avaliable
      3. display rooms of that are less than 100 pounds
-    
+
      */
     private class QueryClass {
 
         private String answer;
 
-		private JAXB_XMLParser xmlhandler; // we need an instance of our parser
-		//This is a candidate for a name change
-		private File xmlfiletoload; // we need a (CURRENT)  file (xml) to load  
-                private  HotelInfo theHotel;
-                //create the list of the generated objects
-                private List<Room> rooms = new ArrayList<Room>();
-                private List<BookingInfo> bookings = new ArrayList<BookingInfo>();
-                private List<Supporter> supporters = new ArrayList<Supporter>();
-                private RobotBrain brain;
-                
-        public QueryClass(int task,RobotBrain abrain) {
+        private JAXB_XMLParser xmlhandler; // we need an instance of our parser
+        //This is a candidate for a name change
+        private File xmlfiletoload; // we need a (CURRENT)  file (xml) to load
+        private HotelInfo theHotel;
+        //create the list of the generated objects
+        private List<Room> rooms = new ArrayList<Room>();
+        private List<BookingInfo> bookings = new ArrayList<BookingInfo>();
+        private List<Supporter> supporters = new ArrayList<Supporter>();
+        private RobotBrain brain;
+
+        public QueryClass(int task, RobotBrain abrain) {
             answer = "";
-             brain=abrain;
-            theHotel= new HotelInfo();
+            brain = abrain;
+            theHotel = new HotelInfo();
             xmlhandler = new JAXB_XMLParser();
             xmlfiletoload = new File("database.xml");
             setQuestionType(task);
-            try{
-            FileInputStream readthatfile = new FileInputStream(xmlfiletoload); // initiate input stream
-	    theHotel = xmlhandler.loadXML(readthatfile);
-            }catch(Exception err)
-            {
+            try {
+                FileInputStream readthatfile = new FileInputStream(xmlfiletoload); // initiate input stream
+                theHotel = xmlhandler.loadXML(readthatfile);
+            } catch (Exception err) {
             }
 
         }
@@ -405,7 +403,7 @@ class RobotBrain {
             switch (task) {
                 case RobotBrain.AVALIABLE_ROOMS:
                     getAvaliableRooms();
-                    break;               
+                    break;
                 case RobotBrain.HOTEL_INFO:
                     getHotelDetails();
                     break;
@@ -424,56 +422,54 @@ class RobotBrain {
 
         //The Xml file questies here
         private void getAvaliableRooms() {
-            
-            this.rooms= this.theHotel.getRoom();
-           this.answer=" <table style='' > <tr><th>Room Number</th><th>Type</th> <th>Amount</th>"
-                   + "<th>Description</th> <th>Status</th> </tr>";
-                      
-           Iterator<Room> iter = this.rooms.iterator();
-           
-           while(iter.hasNext())
-           {
-               //get all the rooms in the databases
-           }
-           
-           //the last room
-            this.answer="</table>";           
-      
-        
+
+            this.rooms = this.theHotel.getRoom();
+            this.answer = " <table style='' > <tr><th>Room Number</th><th>Type</th> <th>Amount</th>"
+                    + "<th>Description</th> <th>Status</th> </tr>";
+
+            Iterator<Room> iter = this.rooms.iterator();
+
+            while (iter.hasNext()) {
+                //get all the rooms in the databases
+            }
+
+            //the last room
+            this.answer = "</table>";
+
         }
+
         private void getHotelDetails() {
-        
-        this.answer=" <center><font color='blue' size='14' > The Hotel Details</font></center>\n";
+
+            this.answer = " <center><font color='blue' size='14' > The Hotel Details</font></center>\n";
         }
 
         private void getBookings() {
-            this.bookings=  this.theHotel.getBookingInfo();
-            this.answer=" <center><font color='blue' size='14' > Booking Informations</font></center>\n";
-           this.answer += "<table> <tr><th>Booking ID</th><th>Room Number</th> <th>Customer ID</th>"
-                   + "<th>Description</th> <th>Status</th><th>Booked Date</th> </tr>";
-                      
-           Iterator<BookingInfo> iter = this.bookings.iterator();
-           
-           while(iter.hasNext())
-           {
-               //get all the rooms in the databases
-           }
-           
-           //the last room
-           this.answer +="<tr><th>Booking ID</th><th>Room Number</th> <th>Customer ID</th>"
-                   + "<th>Description</th> <th>Status</th><th>Booked Date</th> </tr>";
-            this.answer +=" </table>";
+            this.bookings = this.theHotel.getBookingInfo();
+            this.answer = " <center><font color='blue' size='14' > Booking Informations</font></center>\n";
+            this.answer += "<table> <tr><th>Booking ID</th><th>Room Number</th> <th>Customer ID</th>"
+                    + "<th>Description</th> <th>Status</th><th>Booked Date</th> </tr>";
+
+            Iterator<BookingInfo> iter = this.bookings.iterator();
+
+            while (iter.hasNext()) {
+                //get all the rooms in the databases
+            }
+
+            //the last room
+            this.answer += "<tr><th>Booking ID</th><th>Room Number</th> <th>Customer ID</th>"
+                    + "<th>Description</th> <th>Status</th><th>Booked Date</th> </tr>";
+            this.answer += " </table>";
         }
 
         private void getRobotInformation() {
-            
-            this.supporters= theHotel.get_0020Supporter();
-            this.answer+="Well! I am a robot and I am here to help you!\n I'm not allow to tell you any thing more  than this!\n";
-         }
+
+            this.supporters = theHotel.get_0020Supporter();
+            this.answer += "Well! I am a robot and I am here to help you!\n I'm not allow to tell you any thing more  than this!\n";
+        }
 
         private void error() {
-            
-            this.answer="I did not understand that,please can your enter your question again!\n";
+
+            this.answer = "I did not understand that,please can your enter your question again!\n";
         }
 
         private String setQuestionType(int question_type) {
