@@ -39,6 +39,11 @@ class RobotBrain {
    private final static int BOOKING_LIST=4;
    private final static int ROBOT_INFO=5;
    
+   //query fields
+   private static int question_type=0;
+  private QueryClass query;
+  private static boolean IS_SOMETHING_OUT=false;
+   
     
     RobotBrain(Object parent) {
         strResults = "no answer";
@@ -50,6 +55,7 @@ class RobotBrain {
         referenquestions = new ArrayList<String>();
         //this will get the keyword word to rearrange the semantic meaning
         QueryTypeList = new ArrayList<String>();
+        query = new  QueryClass(question_type);
         this.init();
     }
 
@@ -177,20 +183,23 @@ class RobotBrain {
 
         boolean isAmbiguous = this.isAmbiguousQuestion(question_focus);
         if (isAmbiguous) {
-            strResults = "I dont understand your question is too ambiguous , please be specific!!" + question_focus;
-            //add suggestion teams
+            //handler and suggest question for customer or guest
+            this.detectedQuestionFocus();
+            this.strResults="Do mean ";
+            
         } else if (isValidFocusQuestion(question_focus)) {
-            strResults = " I will be able to answer you question please! wait..." + question_focus;
+         this.detectedQuestionFocus();        
         } else {
-            strResults = "Sorry! I dont understand what your are saying.\n Please say again!" + question_focus;
+            this.strResults="I am able to assist you with the following only please! :\n";
+            this.detectedQuestionFocus(); 
             RobotBrain.ValidQuestionCount += 1;
         }
-
+       
     }
 
     String getAnalysisAnswer() {
-
-        return this.strResults;
+         this.strResults = this.query.setQuestionType(question_type);
+        return this.strResults +"["+question_type+"]";
     }
 
     private static final String Context_subject = null;
@@ -312,6 +321,53 @@ class RobotBrain {
 
         return this.message.trim();
     }
+private void decision()
+{
+     // the subject is about number of items
+            if(RobotBrain.CONTEXT_ABOUT_BOOKING==1  || 
+                    (RobotBrain.CONTEXT_ABOUT_BOOKING==1 && RobotBrain.CONTEXT_ABOUT_ROOMS==1))          
+            {
+                // the subject is amount the number of bookings are avaliable
+                question_type= RobotBrain.BOOKING_LIST;
+            }
+            else if(RobotBrain.CONTEXT_ABOUT_HOTEL ==1)
+            {
+                question_type =RobotBrain.HOTEL_INFO;
+            }
+            else if(RobotBrain.CONTEXT_ABOUT_ROOMS==1)
+            {
+                question_type = RobotBrain.AVALIABLE_ROOMS; 
+            }
+           
+            else if(RobotBrain.CONTEXT_ABOUT_SUPPORTER==1)
+            {
+                question_type= RobotBrain.ROBOT_INFO;
+            }  
+            else if(RobotBrain.CONTEXT_REFERENCE==1)
+            {
+               question_type =0; 
+            }
+            else{question_type =-1;}
+}
+    private void detectedQuestionFocus() {
+             
+       
+        if(RobotBrain.CONTEXT_ABOUT_AMOUNT==1)
+        {
+            IS_SOMETHING_OUT= true;
+            decision();
+            
+        }else
+        {
+            IS_SOMETHING_OUT=false;
+            decision();
+            // the question did not mention mention list or count            
+        }
+       }
+
+
+    private void displaySystemGuide() {
+       }
 
     /*
      The query class , that will return answer base on the user questions
@@ -325,13 +381,10 @@ class RobotBrain {
         private String answer;
        public QueryClass(int task)
         {
-            this.analysis(task);
+            setQuestionType(task);
+            
         }
-       
-       public String getAnswer()
-       {
-           return answer;
-       }
+
 
         private void analysis(int task) {
             switch(task)
@@ -385,6 +438,13 @@ class RobotBrain {
         {
             
         }
+
+        private String setQuestionType(int question_type) {
+            
+            this.analysis(question_type);
+            return this.answer;
+        
+           }
         
     }
 }
