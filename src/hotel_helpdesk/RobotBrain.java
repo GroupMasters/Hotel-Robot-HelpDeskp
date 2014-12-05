@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.Vector;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -424,17 +425,21 @@ class RobotBrain {
         private void getAvaliableRooms() {
 
             this.rooms = this.theHotel.getRoom();
-            this.answer = " <table style='' > <tr><th>Room Number</th><th>Type</th> <th>Amount</th>"
+            this.answer = " <table width='100%' > <tr><th>Room Number</th><th>Type</th> <th>Amount</th>"
                     + "<th>Description</th> <th>Status</th> </tr>";
 
             Iterator<Room> iter = this.rooms.iterator();
-
+             
             while (iter.hasNext()) {
                 //get all the rooms in the databases
+                Room temRoom = (Room)iter.next();
+               this.answer += "<tr><td>"+temRoom.getRoomNumber()+"</td><td>"+temRoom.getType()+"</td> <th>"+temRoom.getAmount()+"</td><td>"+temRoom.getDescriptions()+"</td> <td>"+temRoom.isStatus()+"</td> </tr>";
+                
+                JOptionPane.showMessageDialog(null,"testing");
             }
 
             //the last room
-            this.answer = "</table>";
+            this.answer += "</table>";
 
         }
 
