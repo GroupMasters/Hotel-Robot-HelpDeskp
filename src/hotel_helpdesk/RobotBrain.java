@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
@@ -47,7 +48,7 @@ class RobotBrain {
     private static boolean IS_SOMETHING_OUT = false;
 
     RobotBrain(Object parent) {
-        strResults = "no answer";
+        strResults = "";
         roomSym = new ArrayList<String>();
         bookingSym = new ArrayList<String>();
         userSyms = new ArrayList<String>();
@@ -56,7 +57,7 @@ class RobotBrain {
         referenquestions = new ArrayList<String>();
         //this will get the keyword word to rearrange the semantic meaning
         QueryTypeList = new ArrayList<String>();
-        query = new QueryClass(question_type);
+        query = new QueryClass(question_type,this);
         this.init();
     }
 
@@ -84,6 +85,8 @@ class RobotBrain {
         roomSym.add("accomdations");
         roomSym.add("accomdation");
         roomSym.add("lunch");
+        roomSym.add("rom");
+        roomSym.add("roms");
 
         //keyowrds towards booking
         bookingSym.add("book");
@@ -373,8 +376,15 @@ class RobotBrain {
 		//This is a candidate for a name change
 		private File xmlfiletoload; // we need a (CURRENT)  file (xml) to load  
                 private  HotelInfo theHotel;
-        public QueryClass(int task) {
+                //create the list of the generated objects
+                private List<Room> rooms = new ArrayList<Room>();
+                private List<BookingInfo> bookings = new ArrayList<BookingInfo>();
+                private List<Supporter> supporters = new ArrayList<Supporter>();
+                private RobotBrain brain;
+                
+        public QueryClass(int task,RobotBrain abrain) {
             answer = "";
+             brain=abrain;
             theHotel= new HotelInfo();
             xmlhandler = new JAXB_XMLParser();
             xmlfiletoload = new File("database.xml");
@@ -411,22 +421,54 @@ class RobotBrain {
 
         //The Xml file questies here
         private void getAvaliableRooms() {
-          this.answer=" The follow is the list of all the rooms avaliable\n";
+            
+            this.rooms= this.theHotel.getRoom();
+           this.answer=" <table style='' > <tr><th>Room Number</th><th>Type</th> <th>Amount</th>"
+                   + "<th>Description</th> <th>Status</th> </tr>";
+                      
+           Iterator<Room> iter = this.rooms.iterator();
+           
+           while(iter.hasNext())
+           {
+               //get all the rooms in the databases
+           }
+           
+           //the last room
+            this.answer="</table>";           
+      
+        
         }
         private void getHotelDetails() {
+        
         this.answer=" The details about the hotel\n";
         }
 
         private void getBookings() {
-            this.answer=" All the list of bookings\n";
+            this.bookings=  this.theHotel.getBookingInfo();
+           this.answer = "<table> <tr><th>Booking ID</th><th>Room Number</th> <th>Customer ID</th>"
+                   + "<th>Description</th> <th>Status</th><th>Booked Date</th> </tr>";
+                      
+           Iterator<BookingInfo> iter = this.bookings.iterator();
+           
+           while(iter.hasNext())
+           {
+               //get all the rooms in the databases
+           }
+           
+           //the last room
+           this.answer +="<tr><th>Booking ID</th><th>Room Number</th> <th>Customer ID</th>"
+                   + "<th>Description</th> <th>Status</th><th>Booked Date</th> </tr>";
+            this.answer +=" </table>";
         }
 
         private void getRobotInformation() {
+            this.supporters= theHotel.get_0020Supporter();
             this.answer=" Robot informations\n";
         }
 
         private void error() {
-            this.answer="I did not understand ,please can your enter your question again!\n";
+            
+            this.answer="I did not understand that,please can your enter your question again!\n";
         }
 
         private String setQuestionType(int question_type) {

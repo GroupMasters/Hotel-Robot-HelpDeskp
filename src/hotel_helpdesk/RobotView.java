@@ -84,15 +84,16 @@ class RobotView extends View implements ISubject {
         jtplMessages = new JEditorPane();
         jtplMessages.setPreferredSize(new Dimension(APP_WIDTH, APP_HEIGHT));
         jtplMessages.setContentType("text/html");
-
+        jtplMessages.setEditable(false);
         this.jpnlContent = new JPanel(new GridBagLayout());
         this.jsrpl = new JScrollPane(jtplMessages);
         this.jsrpl.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         this.jsrpl.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         this.jsrpl.setBorder(BorderFactory.createTitledBorder("Conversation:"));
-        this.jsrpl.getViewport().setPreferredSize(new Dimension(500, 400));
+        this.jsrpl.getViewport().setPreferredSize(new Dimension(500, 700));
 
         this.toolbar = new JToolBar();
+         this.toolbar.setVisible(false);
         pnlMessageInput = new JPanel(new FlowLayout());
         this.jbtnSendMessage = new JButton(RobotView.CMD_SEND_MESSAGE);
         this.btnSettings = new JButton(RobotView.CMD_CLEAR_SCREEN);

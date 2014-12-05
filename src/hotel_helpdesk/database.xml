@@ -6,18 +6,18 @@ and open the template in the editor.
 -->
 
 
-<hotel>
+<HotelInfo>
     <name> Jason's & Sons Hotel </name>
     <description > Jason's & Sons Hotel was established in 1987 by Jimobama know ja sons. </description>
     
-    <rooms>
+    <Room>
         
-    </rooms>
-    <bookings>
+    </Room>
+    <BookingInfo>
         
-    </bookings>
-    <customers>
+    </BookingInfo>
+    <Supporter>
         
-    </customers>
+    </Supporter>
     
-</hotel>
+</HotelInfo>
