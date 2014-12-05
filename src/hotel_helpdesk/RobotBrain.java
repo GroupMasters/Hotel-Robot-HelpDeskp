@@ -31,20 +31,19 @@ class RobotBrain {
     private static int CONTEXT_ABOUT_BOOKING = 0;
     private static int CONTEXT_REFERENCE = 0;
     private static int ValidQuestionCount = 0;
-    
+
     //query variable
-   private final static  int AVALIABLE_ROOMS=1;
-   private final static int ALLROOMS_LIST=2;
-   private final static int HOTEL_INFO=3;
-   private final static int BOOKING_LIST=4;
-   private final static int ROBOT_INFO=5;
-   
-   //query fields
-   private static int question_type=0;
-  private QueryClass query;
-  private static boolean IS_SOMETHING_OUT=false;
-   
-    
+    private final static int AVALIABLE_ROOMS = 1;
+    private final static int ALLROOMS_LIST = 2;
+    private final static int HOTEL_INFO = 3;
+    private final static int BOOKING_LIST = 4;
+    private final static int ROBOT_INFO = 5;
+
+    //query fields
+    private static int question_type = 0;
+    private QueryClass query;
+    private static boolean IS_SOMETHING_OUT = false;
+
     RobotBrain(Object parent) {
         strResults = "no answer";
         roomSym = new ArrayList<String>();
@@ -55,7 +54,7 @@ class RobotBrain {
         referenquestions = new ArrayList<String>();
         //this will get the keyword word to rearrange the semantic meaning
         QueryTypeList = new ArrayList<String>();
-        query = new  QueryClass(question_type);
+        query = new QueryClass(question_type);
         this.init();
     }
 
@@ -71,7 +70,7 @@ class RobotBrain {
         AmountsSym.add("many");
         AmountsSym.add("cost");
         AmountsSym.add("price");
-         AmountsSym.add("costs");
+        AmountsSym.add("costs");
         AmountsSym.add("prices");
         // keywords towards rooms concepts
 
@@ -108,17 +107,16 @@ class RobotBrain {
         this.message = "";
         QueryTypeList.clear();
         //initialise then again
-        CONTEXT_ABOUT_AMOUNT     = 0;
-        CONTEXT_ABOUT_ROOMS      = 0;
-        CONTEXT_ABOUT_HOTEL      = 0;
-        CONTEXT_ABOUT_SUPPORTER  = 0;
-        CONTEXT_ABOUT_BOOKING    = 0;
-        CONTEXT_REFERENCE        = 0;
-    
-    
+        CONTEXT_ABOUT_AMOUNT = 0;
+        CONTEXT_ABOUT_ROOMS = 0;
+        CONTEXT_ABOUT_HOTEL = 0;
+        CONTEXT_ABOUT_SUPPORTER = 0;
+        CONTEXT_ABOUT_BOOKING = 0;
+        CONTEXT_REFERENCE = 0;
+
         while (tokenizer.hasMoreTokens()) {
             String word = tokenizer.nextToken().toLowerCase();
-           
+
             if (isTakingAboutAmount(word)) {
                 CONTEXT_ABOUT_AMOUNT = 1;
                 QueryTypeList.add(word);
@@ -185,21 +183,21 @@ class RobotBrain {
         if (isAmbiguous) {
             //handler and suggest question for customer or guest
             this.detectedQuestionFocus();
-            this.strResults="Do mean ";
-            
+           
+
         } else if (isValidFocusQuestion(question_focus)) {
-         this.detectedQuestionFocus();        
+            this.detectedQuestionFocus();
         } else {
-            this.strResults="I am able to assist you with the following only please! :\n";
-            this.detectedQuestionFocus(); 
+             
+            this.detectedQuestionFocus();
             RobotBrain.ValidQuestionCount += 1;
         }
-       
+
     }
 
     String getAnalysisAnswer() {
-         this.strResults = this.query.setQuestionType(question_type);
-        return this.strResults +"["+question_type+"]";
+        this.strResults = this.query.setQuestionType(question_type);
+        return (this.strResults + "[" + question_type + "]").trim();
     }
 
     private static final String Context_subject = null;
@@ -321,53 +319,41 @@ class RobotBrain {
 
         return this.message.trim();
     }
-private void decision()
-{
-     // the subject is about number of items
-            if(RobotBrain.CONTEXT_ABOUT_BOOKING==1  || 
-                    (RobotBrain.CONTEXT_ABOUT_BOOKING==1 && RobotBrain.CONTEXT_ABOUT_ROOMS==1))          
-            {
-                // the subject is amount the number of bookings are avaliable
-                question_type= RobotBrain.BOOKING_LIST;
-            }
-            else if(RobotBrain.CONTEXT_ABOUT_HOTEL ==1)
-            {
-                question_type =RobotBrain.HOTEL_INFO;
-            }
-            else if(RobotBrain.CONTEXT_ABOUT_ROOMS==1)
-            {
-                question_type = RobotBrain.AVALIABLE_ROOMS; 
-            }
-           
-            else if(RobotBrain.CONTEXT_ABOUT_SUPPORTER==1)
-            {
-                question_type= RobotBrain.ROBOT_INFO;
-            }  
-            else if(RobotBrain.CONTEXT_REFERENCE==1)
-            {
-               question_type =0; 
-            }
-            else{question_type =-1;}
-}
+
+    private void decision() {
+        // the subject is about number of items
+        if (RobotBrain.CONTEXT_ABOUT_BOOKING == 1
+                || (RobotBrain.CONTEXT_ABOUT_BOOKING == 1 && RobotBrain.CONTEXT_ABOUT_ROOMS == 1)) {
+            // the subject is amount the number of bookings are avaliable
+            question_type = RobotBrain.BOOKING_LIST;
+        } else if (RobotBrain.CONTEXT_ABOUT_HOTEL == 1) {
+            question_type = RobotBrain.HOTEL_INFO;
+        } else if (RobotBrain.CONTEXT_ABOUT_ROOMS == 1) {
+            question_type = RobotBrain.AVALIABLE_ROOMS;
+        } else if (RobotBrain.CONTEXT_ABOUT_SUPPORTER == 1) {
+            question_type = RobotBrain.ROBOT_INFO;
+        } else if (RobotBrain.CONTEXT_REFERENCE == 1) {
+            question_type = 0;
+        } else {
+            question_type = -1;
+        }
+    }
+
     private void detectedQuestionFocus() {
-             
-       
-        if(RobotBrain.CONTEXT_ABOUT_AMOUNT==1)
-        {
-            IS_SOMETHING_OUT= true;
+
+        if (RobotBrain.CONTEXT_ABOUT_AMOUNT == 1) {
+            IS_SOMETHING_OUT = true;
             decision();
-            
-        }else
-        {
-            IS_SOMETHING_OUT=false;
+
+        } else {
+            IS_SOMETHING_OUT = false;
             decision();
             // the question did not mention mention list or count            
         }
-       }
-
+    }
 
     private void displaySystemGuide() {
-       }
+    }
 
     /*
      The query class , that will return answer base on the user questions
@@ -378,23 +364,20 @@ private void decision()
     
      */
     private class QueryClass {
+
         private String answer;
-       public QueryClass(int task)
-        {
+
+        public QueryClass(int task) {
+            answer = "";
             setQuestionType(task);
-            
+
         }
 
-
         private void analysis(int task) {
-            switch(task)
-            {
+            switch (task) {
                 case RobotBrain.AVALIABLE_ROOMS:
-                  getAvaliableRooms();
-                    break;
-                case RobotBrain.ALLROOMS_LIST:
-                    getAllRoomsDetails();
-                    break;
+                    getAvaliableRooms();
+                    break;               
                 case RobotBrain.HOTEL_INFO:
                     getHotelDetails();
                     break;
@@ -404,47 +387,42 @@ private void decision()
                 case RobotBrain.ROBOT_INFO:
                     getRobotInformation();
                     break;
-                    default:
-                        error();
-                        break;                 
-                 
+                default:
+                    error();
+                    break;
+
             }
-       }
-        
+        }
+
         //The Xml file questies here
-        
-        private void getAvaliableRooms()
-        {
-            
+        private void getAvaliableRooms() {
+          this.answer=" The follow is the list of all the rooms avaliable\n";
         }
-        private void getAllRoomsDetails()
-        {
-           
+
+      
+
+        private void getHotelDetails() {
+        this.answer=" The details about the hotel\n";
         }
-        private void getHotelDetails()
-        {
-        
+
+        private void getBookings() {
+            this.answer=" All the list of bookings\n";
         }
-        
-        private void getBookings()
-        {
-            
+
+        private void getRobotInformation() {
+            this.answer=" Robot informations\n";
         }
-        private void getRobotInformation()
-        {
-            
-        }
-        private void error()
-        {
-            
+
+        private void error() {
+            this.answer="I did not understand ,please can your enter your question again!\n";
         }
 
         private String setQuestionType(int question_type) {
-            
+
             this.analysis(question_type);
             return this.answer;
-        
-           }
-        
+
+        }
+
     }
 }
