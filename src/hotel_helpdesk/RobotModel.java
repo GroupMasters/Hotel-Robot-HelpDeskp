@@ -40,9 +40,10 @@ class RobotModel extends Object implements ISubject {
         StringTokenizer tokenizer = new StringTokenizer(text);
 
         // finished processs the message call the controller results to display to the user
-        this.conversations.add("<br>" + UserStart + text );
+        
         this.brain.analysis(tokenizer);
-        String result = this.brain.getAnalysisAnswer();
+        this.conversations.add("<br>" + UserStart + this.brain.recongnise() );
+        String result = this.brain.getAnalysisAnswer();        
         this.conversations.add("<br>" + RobotStart +  result );       
         this.controller.xhsUpdateMessageBoard();
         

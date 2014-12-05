@@ -8,6 +8,7 @@ package hotel_helpdesk;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.StringTokenizer;
+import java.util.Vector;
 
 /**
  *
@@ -22,14 +23,14 @@ class RobotBrain {
     private ArrayList<String> referenquestions;
     private ArrayList<String> AmountsSym;
     private String strResults;
-
+    private String message;
     private static int CONTEXT_ABOUT_AMOUNT = 0;
     private static int CONTEXT_ABOUT_ROOMS = 0;
     private static int CONTEXT_ABOUT_HOTEL = 0;
     private static int CONTEXT_ABOUT_SUPPORTER = 0;
     private static int CONTEXT_ABOUT_BOOKING = 0;
     private static int CONTEXT_REFERENCE = 0;
-    private static int ValidQuestionCount=0;
+    private static int ValidQuestionCount = 0;
 
     RobotBrain(Object parent) {
         strResults = "no answer";
@@ -54,7 +55,7 @@ class RobotBrain {
         AmountsSym.add("available");
         AmountsSym.add("unavailable");
         AmountsSym.add("many");
-         // keywords towards rooms concepts
+        // keywords towards rooms concepts
 
         roomSym.add("rooms");
         roomSym.add("room");
@@ -82,35 +83,46 @@ class RobotBrain {
         hotelSymns.add("place");
         // Reference sym
         referenquestions.add("that");
-      
 
     }
 
     void analysis(StringTokenizer tokenizer) {
-
+        this.message = "";
         while (tokenizer.hasMoreTokens()) {
             String word = tokenizer.nextToken().toLowerCase();
+           
             if (isTakingAboutAmount(word)) {
-
                 CONTEXT_ABOUT_AMOUNT = 1;
+                QueryTypeList.add(word);
+                this.message += " <b>" + word + "</b> ";
             } else if (isTakingAboutRoom(word)) {
 
                 CONTEXT_ABOUT_ROOMS = 1;
+                QueryTypeList.add(word);
+                this.message += " <b>" + word + "</b> ";
             } else if (isTakingAboutBooking(word)) {
 
                 CONTEXT_ABOUT_BOOKING = 1;
+                QueryTypeList.add(word);
+                this.message += " <b>" + word + "</b> ";
             } else if (isReferenceToPreviousQuerySubject(word)) {
 
                 CONTEXT_REFERENCE = 1;
+                QueryTypeList.add(word);
+                this.message += " <b>" + word + "</b> ";
             } else if (isTakingAboutSupporter(word)) {
-
                 CONTEXT_ABOUT_SUPPORTER = 1;
+                QueryTypeList.add(word);
+                this.message += " <b>" + word + "</b> ";
             } else if (isAskingAboutHotelDetails(word)) {
                 CONTEXT_ABOUT_HOTEL = 1;
+                QueryTypeList.add(word);
+                this.message += "<b>" + word + "</b> ";
 
+            } else {
+                this.message += word + " ";
             }
 
-            QueryTypeList.add(word);
         }
 
         // Find the semantic meaning of the user setences      
@@ -125,10 +137,10 @@ class RobotBrain {
             // the user is taking amount number of something
             question_focus++;
         }
-       if (RobotBrain.CONTEXT_ABOUT_BOOKING == 1) {
+        if (RobotBrain.CONTEXT_ABOUT_BOOKING == 1) {
             question_focus++;
         }
-       if (RobotBrain.CONTEXT_ABOUT_HOTEL == 1) {
+        if (RobotBrain.CONTEXT_ABOUT_HOTEL == 1) {
             question_focus++;
         }
         if (RobotBrain.CONTEXT_ABOUT_ROOMS == 1) {
@@ -143,20 +155,19 @@ class RobotBrain {
 
         boolean isAmbiguous = this.isAmbiguousQuestion(question_focus);
         if (isAmbiguous) {
-            strResults = "I dont understand your question is too ambiguous , please be specific!!"+question_focus;
+            strResults = "I dont understand your question is too ambiguous , please be specific!!" + question_focus;
             //add suggestion teams
-        } else if(isValidFocusQuestion(question_focus)){
-            strResults = " I will be able to answer you question please! wait..."+question_focus;
-        }
-        else
-        {
-           strResults = "Sorry! I dont understand what your are saying.\n Please say again!"+question_focus;
-           RobotBrain.ValidQuestionCount +=1;
+        } else if (isValidFocusQuestion(question_focus)) {
+            strResults = " I will be able to answer you question please! wait..." + question_focus;
+        } else {
+            strResults = "Sorry! I dont understand what your are saying.\n Please say again!" + question_focus;
+            RobotBrain.ValidQuestionCount += 1;
         }
 
     }
 
     String getAnalysisAnswer() {
+
         return this.strResults;
     }
 
@@ -172,6 +183,7 @@ class RobotBrain {
         while (iter.hasNext()) {
             if (iter.next().equalsIgnoreCase(word)) {
                 isOkay = true;
+                break;
             }
         }
 
@@ -186,6 +198,7 @@ class RobotBrain {
         while (iter.hasNext()) {
             if (iter.next().equalsIgnoreCase(word)) {
                 isOkay = true;
+                break;
             }
         }
 
@@ -200,6 +213,7 @@ class RobotBrain {
         while (iter.hasNext()) {
             if (iter.next().equalsIgnoreCase(word)) {
                 isOkay = true;
+                break;
             }
         }
 
@@ -214,6 +228,7 @@ class RobotBrain {
         while (iter.hasNext()) {
             if (iter.next().equalsIgnoreCase(word)) {
                 isOkay = true;
+                break;
             }
         }
 
@@ -221,13 +236,14 @@ class RobotBrain {
     }
 
     private boolean isTakingAboutSupporter(String word) {
-         boolean isOkay = false;
+        boolean isOkay = false;
 
         Iterator<String> iter = this.userSyms.iterator();
 
         while (iter.hasNext()) {
             if (iter.next().equalsIgnoreCase(word)) {
                 isOkay = true;
+                break;
             }
         }
 
@@ -235,13 +251,14 @@ class RobotBrain {
     }
 
     private boolean isAskingAboutHotelDetails(String word) {
-         boolean isOkay = false;
+        boolean isOkay = false;
 
         Iterator<String> iter = this.hotelSymns.iterator();
 
         while (iter.hasNext()) {
             if (iter.next().equalsIgnoreCase(word)) {
                 isOkay = true;
+                break;
             }
         }
 
@@ -251,8 +268,9 @@ class RobotBrain {
     private boolean isAmbiguousQuestion(int question_focus) {
         boolean isOkay = false;
 
-        if (question_focus > 2) {
+        if (question_focus > 3) {
             isOkay = true;
+
         }
 
         return isOkay;
@@ -261,12 +279,17 @@ class RobotBrain {
     private boolean isValidFocusQuestion(int question_focus) {
         boolean isOkay = false;
 
-        if (question_focus >=1 && question_focus <= 2) {
+        if (question_focus >= 1 && question_focus <= 3) {
             isOkay = true;
         }
 
         return isOkay;
-  }
+    }
+
+    String recongnise() {
+
+        return this.message.trim();
+    }
 
     /*
      The query class , that will return answer base on the user questions
