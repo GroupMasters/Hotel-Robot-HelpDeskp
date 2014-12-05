@@ -63,6 +63,10 @@ class RobotBrain {
         AmountsSym.add("available");
         AmountsSym.add("unavailable");
         AmountsSym.add("many");
+        AmountsSym.add("cost");
+        AmountsSym.add("price");
+         AmountsSym.add("costs");
+        AmountsSym.add("prices");
         // keywords towards rooms concepts
 
         roomSym.add("rooms");
