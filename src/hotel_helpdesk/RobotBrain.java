@@ -100,6 +100,16 @@ class RobotBrain {
 
     void analysis(StringTokenizer tokenizer) {
         this.message = "";
+        QueryTypeList.clear();
+        //initialise then again
+        CONTEXT_ABOUT_AMOUNT     = 0;
+        CONTEXT_ABOUT_ROOMS      = 0;
+        CONTEXT_ABOUT_HOTEL      = 0;
+        CONTEXT_ABOUT_SUPPORTER  = 0;
+        CONTEXT_ABOUT_BOOKING    = 0;
+        CONTEXT_REFERENCE        = 0;
+    
+    
         while (tokenizer.hasMoreTokens()) {
             String word = tokenizer.nextToken().toLowerCase();
            

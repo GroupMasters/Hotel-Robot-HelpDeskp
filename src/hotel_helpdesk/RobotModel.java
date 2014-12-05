@@ -37,15 +37,23 @@ class RobotModel extends Object implements ISubject {
     }
 
     void processMessage(String text) {
-        StringTokenizer tokenizer = new StringTokenizer(text);
+        
+        String[] message = text.split("or");
+        StringTokenizer tokenizer1 = new StringTokenizer(text);
+        this.brain.analysis(tokenizer1);       
+        this.conversations.add("<br>" + UserStart + this.brain.recongnise() );
+        
+        for(int i=0; i< message.length;i++){
+        StringTokenizer tokenizer = new StringTokenizer(message[i]);
 
         // finished processs the message call the controller results to display to the user
         
-        this.brain.analysis(tokenizer);
-        this.conversations.add("<br>" + UserStart + this.brain.recongnise() );
+        this.brain.analysis(tokenizer);       
         String result = this.brain.getAnalysisAnswer();        
         this.conversations.add("<br>" + RobotStart +  result );       
         this.controller.xhsUpdateMessageBoard();
+        
+        }
         
       
     }
