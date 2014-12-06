@@ -40,18 +40,17 @@ public class JAXB_XMLParser {
 
 			if (myhotel == null) {
 
-				// generate the mynewlib object that conatins all info from the xml document
+				// generate the myhotel object that conatins all info from the xml document
 				myhotel= (HotelInfo) (((JAXBElement) xmltoobject).getValue());
-				// The above (Library) is a candidate for a name change because you wont deal with 
-				// a library any more in your conversion
 				
-				return myhotel; // return Library Objekt
+				
+				
 			}
 		} // try
 
 		catch (JAXBException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return myhotel; // return Hotel Object
 	}
 }

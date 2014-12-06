@@ -379,6 +379,7 @@ class RobotBrain {
         //This is a candidate for a name change
         private File xmlfiletoload; // we need a (CURRENT)  file (xml) to load
         private HotelInfo theHotel;
+        private List<HotelInfo> theHotelList;
         //create the list of the generated objects
         private List<Room> rooms = new ArrayList<Room>();
         private List<BookingInfo> bookings = new ArrayList<BookingInfo>();
@@ -388,15 +389,21 @@ class RobotBrain {
         public QueryClass(int task, RobotBrain abrain) {
             answer = "";
             brain = abrain;
+            theHotelList=new ArrayList<HotelInfo>();
             theHotel = new HotelInfo();
             xmlhandler = new JAXB_XMLParser();
-            xmlfiletoload = new File("database.xml");
-            setQuestionType(task);
-            try {
+         
+            xmlfiletoload = new File(this.getClass().getResource("database.xml").getFile());
+           if(xmlfiletoload.exists())
+           {
+             setQuestionType(task);
+             try {
                 FileInputStream readthatfile = new FileInputStream(xmlfiletoload); // initiate input stream
                 theHotel = xmlhandler.loadXML(readthatfile);
-            } catch (Exception err) {
-            }
+                theHotelList.add(theHotel);
+             } catch (Exception err) {
+             }
+           }
 
         }
 
@@ -446,6 +453,9 @@ class RobotBrain {
         private void getHotelDetails() {
 
             this.answer = " <center><font color='blue' size='14' > The Hotel Details</font></center>\n";
+            this.answer+=" Hotel Name : "+theHotel.getName()+"<br> ";
+            this.answer+=" Description: "+theHotel.getDescriptions() +"<br>";
+            this.answer+=" Number of Rooms: "+theHotel.getNumberOfRooms()+"<br>";
         }
 
         private void getBookings() {
