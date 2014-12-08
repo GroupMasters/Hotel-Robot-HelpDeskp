@@ -53,7 +53,7 @@ class RobotModel extends Object implements ISubject {
         this.brain.analysis(tokenizer);       
         String result = this.brain.getAnalysisAnswer();        
         this.conversations.add("<br>" + RobotStart +  result );       
-        this.controller.xhsUpdateMessageBoard();
+        this.controller.xhsUpdateMessageBoard();       
         
         }
         
