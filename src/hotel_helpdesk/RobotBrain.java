@@ -45,7 +45,7 @@ class RobotBrain {
 
     //query fields
     private static int question_type = 0;
-    private QueryClass query;
+    private fileXML query;
     private static boolean IS_SOMETHING_OUT = false;
 
     RobotBrain(Object parent) {
@@ -58,7 +58,7 @@ class RobotBrain {
         referenquestions = new ArrayList<String>();
         //this will get the keyword word to rearrange the semantic meaning
         QueryTypeList = new ArrayList<String>();
-        query = new QueryClass(question_type, this);
+        query = new fileXML(question_type, this);
         this.init();
     }
 
@@ -371,13 +371,13 @@ class RobotBrain {
      3. display rooms of that are less than 100 pounds
 
      */
-    private class QueryClass {
+    private class fileXML {
 
         private String answer;
 
         private JAXB_XMLParser xmlhandler; // we need an instance of our parser
         //This is a candidate for a name change
-        private File xmlfiletoload; // we need a (CURRENT)  file (xml) to load
+        private File xmlFile; // we need a (CURRENT)  file (xml) to load
         private HotelInfo theHotel;
         private List<HotelInfo> theHotelList;
         //create the list of the generated objects
@@ -386,23 +386,30 @@ class RobotBrain {
         private List<Supporter> supporters = new ArrayList<Supporter>();
         private RobotBrain brain;
 
-        public QueryClass(int task, RobotBrain abrain) {
+        public fileXML(int task, RobotBrain abrain) {
             answer = "";
             brain = abrain;
             theHotelList=new ArrayList<HotelInfo>();
             theHotel = new HotelInfo();
             xmlhandler = new JAXB_XMLParser();
-         
-            xmlfiletoload = new File(this.getClass().getResource("database.xml").getFile());
-           if(xmlfiletoload.exists())
+          
+            xmlFile = new File(this.getClass().getResource("database.xml").getPath());
+           
+           if(xmlFile.canRead())
            {
+                JOptionPane.showMessageDialog(null, "Is a file"," " ,JOptionPane.ERROR_MESSAGE);  	
              setQuestionType(task);
              try {
-                FileInputStream readthatfile = new FileInputStream(xmlfiletoload); // initiate input stream
+                FileInputStream readthatfile = new FileInputStream(xmlFile); // initiate input stream
                 theHotel = xmlhandler.loadXML(readthatfile);
                 theHotelList.add(theHotel);
              } catch (Exception err) {
+                 err.printStackTrace();
              }
+           }else
+           {
+                JOptionPane.showMessageDialog(null, xmlFile.getAbsoluteFile().toPath()," " ,JOptionPane.ERROR_MESSAGE);
+              
            }
 
         }
@@ -440,9 +447,9 @@ class RobotBrain {
             while (iter.hasNext()) {
                 //get all the rooms in the databases
                 Room temRoom = (Room)iter.next();
-               this.answer += "<tr><td>"+temRoom.getRoomNumber()+"</td><td>"+temRoom.getType()+"</td> <th>"+temRoom.getAmount()+"</td><td>"+temRoom.getDescriptions()+"</td> <td>"+temRoom.isStatus()+"</td> </tr>";
+                this.answer += "<tr><td>"+temRoom.getRoomNumber()+"</td><td>"+temRoom.getType()+"</td> <th>"+temRoom.getAmount()+"</td><td>"+temRoom.getDescriptions()+"</td> <td>"+temRoom.isStatus()+"</td> </tr>";
                 
-                JOptionPane.showMessageDialog(null,"testing");
+               // JOptionPane.showMessageDialog(null,"testing");
             }
 
             //the last room
