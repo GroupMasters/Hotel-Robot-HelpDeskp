@@ -5,7 +5,6 @@
  */
 package hotel_helpdesk;
 
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -14,27 +13,27 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.Iterator;
 import java.util.Vector;
 import javax.swing.BorderFactory;
-import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import server.share.IObserver;
 import server.share.View;
 import server.share.ISubject;
-import javax.swing.JTextPane;
 import javax.swing.JToolBar;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.text.DefaultStyledDocument;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.Style;
-import javax.swing.text.StyledDocument;
+import javax.swing.UIManager;
 
 /**
  *
@@ -61,6 +60,15 @@ class RobotView extends View implements ISubject {
     private GridBagLayout g;
     private Font inputMessageFont;
     private JToolBar toolbar;
+    
+    
+    // The menu  bar 
+    
+    private static final String CMD_EXIT_APPLICATION="Exit";
+    private JMenuBar menubar;
+    private JMenu    mFile;
+    private JMenuItem mExistApplication;
+    
 
     //private statics
     private static int APP_WIDTH = 400;
@@ -73,6 +81,7 @@ class RobotView extends View implements ISubject {
     public RobotView(String title) {
 
         this.setTitle(title);
+         initMenuBar();
         this.initGui();
         this.addWindowListener(new EventHandler(this));
         this.jbtnSendMessage.addActionListener(new EventHandler(this));
@@ -147,14 +156,41 @@ class RobotView extends View implements ISubject {
         gc.gridwidth = 2;
         gc.insets = new Insets(LEFT, RIGHT, TOP, BOTTOM);
         this.jpnlContent.add(this.pnlMessageInput, gc);
-
+       
       
 
         //add the main panle to the form
         this.getContentPane().add(jpnlContent);
 
     }
-
+   private void initMenuBar()
+   {
+        try {
+            //This will get the system look for the UI
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+              this.addWindowListener(new RobotView.CustomizeWindowAdaptor(this));
+        } catch (Exception err) {
+                err.printStackTrace();
+        }
+       
+        menubar= new JMenuBar();
+       
+        Font menuFont = new Font(Font.SANS_SERIF, Font.PLAIN, 14);
+       
+        mFile= new JMenu("File");
+        mExistApplication = new JMenuItem(CMD_EXIT_APPLICATION);
+        mExistApplication.setMnemonic(KeyEvent.VK_F);
+        mExistApplication.setFont(menuFont);
+        mExistApplication.addActionListener(new CustomizeWindowAdaptor(this));
+        mFile.add(mExistApplication);
+        
+        
+    
+        menubar.add(mFile);
+        this.setJMenuBar(menubar);
+        
+    
+   }
     @Override
     public void attach(IObserver observer) {
         controller = (RobotController) observer;
@@ -181,6 +217,8 @@ class RobotView extends View implements ISubject {
         this.jtplMessages.setText("");
     }
 
+    
+    // the inner class that handle events 
     private class EventHandler implements WindowListener, ActionListener {
 
         RobotView parent;
@@ -195,7 +233,7 @@ class RobotView extends View implements ISubject {
 
         @Override
         public void windowClosing(WindowEvent e) {
-            this.parent.controller.xhsCloseHelpWindow();
+            this.parent.controller.xhsCloseWindow();
         }
 
         @Override
@@ -232,6 +270,30 @@ class RobotView extends View implements ISubject {
 
             this.parent.controller.xhsSendMessage(this.parent.jtxtMessage.getText());
             this.parent.jtxtMessage.setText("");
+        }
+    }
+    
+    
+    
+     private class CustomizeWindowAdaptor extends WindowAdapter implements ActionListener{
+
+        RobotView window;
+
+        CustomizeWindowAdaptor(RobotView window) {
+            this.window = window;
+        }
+
+        public void windowClosing(WindowEvent evt) {
+            this.window.controller.xhsCloseWindow();
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+           if(this.window.mExistApplication.equals(e.getSource()))
+           {
+               windowClosing(null);
+           }
+            
         }
     }
 

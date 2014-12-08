@@ -397,18 +397,19 @@ class RobotBrain {
            
            if(xmlFile.canRead())
            {
-                JOptionPane.showMessageDialog(null, "Is a file"," " ,JOptionPane.ERROR_MESSAGE);  	
-             setQuestionType(task);
+           	
+            
              try {
                 FileInputStream readthatfile = new FileInputStream(xmlFile); // initiate input stream
                 theHotel = xmlhandler.loadXML(readthatfile);
                 theHotelList.add(theHotel);
+                setQuestionType(task);// Set the question task  and return the question focus directions
              } catch (Exception err) {
                  err.printStackTrace();
              }
            }else
            {
-                JOptionPane.showMessageDialog(null, xmlFile.getAbsoluteFile().toPath()," " ,JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Cannot not connect to database ! contact administrators please!"," " ,JOptionPane.ERROR_MESSAGE);
               
            }
 

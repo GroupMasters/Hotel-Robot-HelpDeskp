@@ -47,7 +47,7 @@ public class RobotController extends IObserver implements Controller {
         return this.view;
     }
 
-    void xhsCloseHelpWindow() {
+    void xhsCloseWindow() {
         this.view.dispose();
         System.exit(0);
     }
