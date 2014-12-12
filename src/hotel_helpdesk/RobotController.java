@@ -6,9 +6,9 @@
 package hotel_helpdesk;
 
 import java.util.Vector;
-import server.share.Controller;
-import server.share.ISubject;
-import server.share.IObserver;
+import helps.Controller;
+import helps.ISubject;
+import helps.IObserver;
 
 /**
  *

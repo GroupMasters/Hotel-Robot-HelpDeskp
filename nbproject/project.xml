@@ -18,12 +18,12 @@
         </data>
         <references xmlns="http://www.netbeans.org/ns/ant-project-references/1">
             <reference>
-                <foreign-project>server</foreign-project>
+                <foreign-project>ServerEJB</foreign-project>
                 <artifact-type>jar</artifact-type>
                 <script>build.xml</script>
-                <target>jar</target>
+                <target>dist</target>
                 <clean-target>clean</clean-target>
-                <id>jar</id>
+                <id>dist</id>
             </reference>
         </references>
     </configuration>

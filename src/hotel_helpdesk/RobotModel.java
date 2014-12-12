@@ -6,8 +6,8 @@
 package hotel_helpdesk;
 
 import java.util.StringTokenizer;
-import server.share.IObserver;
-import server.share.ISubject;
+import helps.IObserver;
+import helps.ISubject;
 import java.util.Vector;
 
 /**

@@ -8,7 +8,7 @@
 
 package hotel_helpdesk;
 
-import xml_java_classes.*;
+
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
