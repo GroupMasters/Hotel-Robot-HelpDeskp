@@ -45,7 +45,7 @@ class RobotBrain {
 
     //query fields
     private static int question_type = 0;
-    private fileXML query;
+    private ProcessorXML query;
     private static boolean IS_SOMETHING_OUT = false;
 
     RobotBrain(Object parent) {
@@ -58,7 +58,7 @@ class RobotBrain {
         referenquestions = new ArrayList<String>();
         //this will get the keyword word to rearrange the semantic meaning
         QueryTypeList = new ArrayList<String>();
-        query = new fileXML(question_type, this);
+        query = new ProcessorXML(question_type, this);
         this.init();
     }
 
@@ -371,47 +371,35 @@ class RobotBrain {
      3. display rooms of that are less than 100 pounds
 
      */
-    private class fileXML {
+    private class ProcessorXML {
 
         private String answer;
-
         private JAXB_XMLParser xmlhandler; // we need an instance of our parser
         //This is a candidate for a name change
-        private File xmlFile; // we need a (CURRENT)  file (xml) to load
-        private HotelInfo theHotel;
-        private List<HotelInfo> theHotelList;
-        //create the list of the generated objects
+     
+        private HotelInfo hotel;
+       //create individual object list
         private List<Room> rooms = new ArrayList<Room>();
         private List<BookingInfo> bookings = new ArrayList<BookingInfo>();
         private List<Supporter> supporters = new ArrayList<Supporter>();
         private RobotBrain brain;
 
-        public fileXML(int task, RobotBrain abrain) {
+        public ProcessorXML(int task, RobotBrain abrain) {
             answer = "";
-            brain = abrain;
-            theHotelList=new ArrayList<HotelInfo>();
-            theHotel = new HotelInfo();
-            xmlhandler = new JAXB_XMLParser();
-          
-            xmlFile = new File(this.getClass().getResource("database.xml").getPath());
-           
-           if(xmlFile.canRead())
-           {
-           	
+            brain = abrain;         
+            hotel = new HotelInfo();
+            try
+            {
+              xmlhandler = new JAXB_XMLParser("C:\\Users\\Obaro I. Johnson\\Desktop\\Assignment\\Hotel-Robot-HelpDeskp\\src\\hotel_helpdesk\\database.xml",ObjectFactory.class);
+              hotel=(HotelInfo) xmlhandler.unMarshaller();
+               
+              setQuestionType(task);// Set the question task  and return the question focus directions
+            }
+            catch(Exception err)
+            {
+                JOptionPane.showMessageDialog(null,err.getMessage());
+            }
             
-             try {
-                FileInputStream readthatfile = new FileInputStream(xmlFile); // initiate input stream
-                theHotel = xmlhandler.loadXML(readthatfile);
-                theHotelList.add(theHotel);
-                setQuestionType(task);// Set the question task  and return the question focus directions
-             } catch (Exception err) {
-                 err.printStackTrace();
-             }
-           }else
-           {
-                JOptionPane.showMessageDialog(null, "Cannot not connect to database ! contact administrators please!"," " ,JOptionPane.ERROR_MESSAGE);
-              
-           }
 
         }
 
@@ -439,8 +427,8 @@ class RobotBrain {
         //The Xml file questies here
         private void getAvaliableRooms() {
 
-            this.rooms = this.theHotel.getRoom();
-            this.answer = " <table width='100%' > <tr><th>Room Number</th><th>Type</th> <th>Amount</th>"
+            this.rooms = this.hotel.getRoom();
+            this.answer = "Below is the list of rooms requested\n <table width='100%' > <tr><th>Room Number</th><th>Type</th> <th>Amount</th>"
                     + "<th>Description</th> <th>Status</th> </tr>";
 
             Iterator<Room> iter = this.rooms.iterator();
@@ -460,15 +448,15 @@ class RobotBrain {
 
         private void getHotelDetails() {
 
-            this.answer = " <center><font color='blue' size='14' > The Hotel Details</font></center>\n";
-            this.answer+=" Hotel Name : "+theHotel.getName()+"<br> ";
-            this.answer+=" Description: "+theHotel.getDescriptions() +"<br>";
-            this.answer+=" Number of Rooms: "+theHotel.getNumberOfRooms()+"<br>";
+            this.answer = "Answer found is  \n <center><font color='blue' size='14' > The Hotel Details</font></center>\n";
+            this.answer+=" Hotel Name : "+hotel.getName()+"<br> ";
+            this.answer+=" Description: "+hotel.getDescriptions() +"<br>";
+            this.answer+=" Number of Rooms: "+hotel.getNumberOfRooms()+"<br>";
         }
 
         private void getBookings() {
-            this.bookings = this.theHotel.getBookingInfo();
-            this.answer = " <center><font color='blue' size='14' > Booking Informations</font></center>\n";
+            this.bookings = this.hotel.getBookingInfo();
+            this.answer = " Hi below is the listd of all the bookings \n<center><font color='blue' size='14' > Booking Informations</font></center>\n";
             this.answer += "<table> <tr><th>Booking ID</th><th>Room Number</th> <th>Customer ID</th>"
                     + "<th>Description</th> <th>Status</th><th>Booked Date</th> </tr>";
 
@@ -486,13 +474,13 @@ class RobotBrain {
 
         private void getRobotInformation() {
 
-            this.supporters = theHotel.get_0020Supporter();
+            this.supporters = hotel.get_0020Supporter();
             this.answer += "Well! I am a robot and I am here to help you!\n I'm not allow to tell you any thing more  than this!\n";
         }
 
         private void error() {
 
-            this.answer = "I did not understand that,please can your enter your question again!\n";
+            this.answer = "I dont understand that please can your enter your question again!\n";
         }
 
         private String setQuestionType(int question_type) {

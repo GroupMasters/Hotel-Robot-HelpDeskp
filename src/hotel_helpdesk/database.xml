@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 
 
-<HotelInfo>
+<hotel>
     <name> Jason's & Sons Hotel </name>
     <descriptions> Jason's & Sons Hotel was established in 1987 by Jimobama know ja sons. </descriptions>
     <numberOfRooms>12</numberOfRooms>
@@ -56,4 +56,4 @@ and open the template in the editor.
         <positions>Online Supporter</positions> 
     </Supporter>
     
-</HotelInfo>
+</hotel>

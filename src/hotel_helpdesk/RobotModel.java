@@ -72,8 +72,7 @@ class RobotModel extends Object implements ISubject {
        conversations.add("\n1- I can help on the following information .<br>");
        conversations.add("\n1-The hotel .<br>");
        conversations.add("\n2 - The Available Rooms .<br>");
-       conversations.add("\n2 - The booking list .<br>");
-      
+       conversations.add("\n2 - The booking list .<br>");    
       
     }
 
