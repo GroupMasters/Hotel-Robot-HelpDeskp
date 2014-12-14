@@ -1,59 +1,43 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-
-
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <hotel>
-    <name> Jason's & Sons Hotel </name>
-    <descriptions> Jason's & Sons Hotel was established in 1987 by Jimobama know ja sons. </descriptions>
+    <name>University of west london &amp; obaro</name>
     <numberOfRooms>12</numberOfRooms>
+    <descriptions> Jason's  Sons Hotel was established in 1987 by Jimobama know ja sons. </descriptions>
+    <BookingInfo>
+        <bookNo>0012</bookNo>
+        <customerID>cus00001</customerID>
+        <roomNumber>3</roomNumber>
+        <Descriptions>This room is be book amount three days ago</Descriptions>
+        <status>true</status>
+        <date>12/14/2014</date>
+    </BookingInfo>
+    <BookingInfo>
+        <bookNo>1012</bookNo>
+        <customerID>cus00021</customerID>
+        <roomNumber>1</roomNumber>
+        <Descriptions>This booking information is no longer valid</Descriptions>
+        <status>true</status>
+         <date>12/14/2014</date>
+    </BookingInfo>
     <Room>
         <roomNumber> 1 </roomNumber>
-        <type> double</type> 
-        <amount>£45.8 </amount>
+        <type> double</type>
+        <amount>0</amount>
         <status>true</status>
-        <Descriptions>Two double bed, with big suit and televisions</Descriptions> 
+        <Descriptions>Two double bed, with big suit and televisions</Descriptions>
     </Room>
-     <Room>
+    <Room>
         <roomNumber> 2 </roomNumber>
-        <type> Single</type> 
-        <amount>£35.8 </amount>
+        <type> Single</type>
+        <amount>0</amount>
         <status>true</status>
-        <Descriptions>One big suit and bathroom and a televisions</Descriptions> 
+        <Descriptions>One big suit and bathroom and a televisions</Descriptions>
     </Room>
-     <Room>
+    <Room>
         <roomNumber> 3 </roomNumber>
-        <type> double</type> 
-        <amount>£145.8 </amount>
+        <type> double</type>
+        <amount>0</amount>
         <status>true</status>
-        <Descriptions>Presidential suit and two big palour and dinner table and tv</Descriptions> 
+        <Descriptions>Presidential suit and two big palour and dinner table and tv</Descriptions>
     </Room>
-    
-    
-    <BookingInfo>
-        <bookNo>0012</bookNo> 
-        <customerID>cus00001</customerID>             
-        <roomNumber>3</roomNumber>             
-        <Descriptions>This room is be book amount three days ago</Descriptions> 
-        <status>true</status>        
-    </BookingInfo>
-    
-    
-     <BookingInfo>
-        <bookNo>1012</bookNo> 
-        <customerID>cus00021</customerID>             
-        <roomNumber>1</roomNumber>             
-        <Descriptions>This booking information is no longer valid</Descriptions> 
-        <status>true</status>        
-    </BookingInfo>
-    
- 
-    <Supporter>
-        <name>Robot</name> 
-        <positions>Online Supporter</positions> 
-    </Supporter>
-    
 </hotel>

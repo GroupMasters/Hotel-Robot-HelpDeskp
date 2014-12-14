@@ -37,11 +37,11 @@ class RobotBrain {
     private static int ValidQuestionCount = 0;
 
     //query variable
-    private final static int AVALIABLE_ROOMS = 1;
-    private final static int ALLROOMS_LIST = 2;
-    private final static int HOTEL_INFO = 3;
-    private final static int BOOKING_LIST = 4;
-    private final static int ROBOT_INFO = 5;
+     public final static int AVALIABLE_ROOMS = 1;
+     public  final static int ALLROOMS_LIST = 2;
+     public  final static int HOTEL_INFO = 3;
+     public  final static int BOOKING_LIST = 4;
+     public  final static int ROBOT_INFO = 5;
 
     //query fields
     private static int question_type = 0;
@@ -78,6 +78,7 @@ class RobotBrain {
         AmountsSym.add("prices");
         AmountsSym.add("information");
         AmountsSym.add("informations");
+        AmountsSym.add("show");
         // keywords towards rooms concepts
 
         roomSym.add("rooms");
@@ -360,135 +361,6 @@ class RobotBrain {
         }
     }
 
-    private void displaySystemGuide() {
-    }
-
-    /*
-     The query class , that will return answer base on the user questions
-     like
-     1. display all rooms
-     2. How many rooms are avaliable
-     3. display rooms of that are less than 100 pounds
-
-     */
-    private class ProcessorXML {
-
-        private String answer;
-        private JAXB_XMLParser xmlhandler; // we need an instance of our parser
-        //This is a candidate for a name change
-     
-        private HotelInfo hotel;
-       //create individual object list
-        private List<Room> rooms = new ArrayList<Room>();
-        private List<BookingInfo> bookings = new ArrayList<BookingInfo>();
-        private List<Supporter> supporters = new ArrayList<Supporter>();
-        private RobotBrain brain;
-
-        public ProcessorXML(int task, RobotBrain abrain) {
-            answer = "";
-            brain = abrain;         
-            hotel = new HotelInfo();
-            try
-            {
-              xmlhandler = new JAXB_XMLParser("C:\\Users\\Obaro I. Johnson\\Desktop\\Assignment\\Hotel-Robot-HelpDeskp\\src\\hotel_helpdesk\\database.xml",ObjectFactory.class);
-              hotel=(HotelInfo) xmlhandler.unMarshaller();
-               
-              setQuestionType(task);// Set the question task  and return the question focus directions
-            }
-            catch(Exception err)
-            {
-                JOptionPane.showMessageDialog(null,err.getMessage());
-            }
-            
-
-        }
-
-        private void analysis(int task) {
-            switch (task) {
-                case RobotBrain.AVALIABLE_ROOMS:
-                    getAvaliableRooms();
-                    break;
-                case RobotBrain.HOTEL_INFO:
-                    getHotelDetails();
-                    break;
-                case RobotBrain.BOOKING_LIST:
-                    getBookings();
-                    break;
-                case RobotBrain.ROBOT_INFO:
-                    getRobotInformation();
-                    break;
-                default:
-                    error();
-                    break;
-
-            }
-        }
-
-        //The Xml file questies here
-        private void getAvaliableRooms() {
-
-            this.rooms = this.hotel.getRoom();
-            this.answer = "Below is the list of rooms requested\n <table width='100%' > <tr><th>Room Number</th><th>Type</th> <th>Amount</th>"
-                    + "<th>Description</th> <th>Status</th> </tr>";
-
-            Iterator<Room> iter = this.rooms.iterator();
-             
-            while (iter.hasNext()) {
-                //get all the rooms in the databases
-                Room temRoom = (Room)iter.next();
-                this.answer += "<tr><td>"+temRoom.getRoomNumber()+"</td><td>"+temRoom.getType()+"</td> <th>"+temRoom.getAmount()+"</td><td>"+temRoom.getDescriptions()+"</td> <td>"+temRoom.isStatus()+"</td> </tr>";
-                
-               // JOptionPane.showMessageDialog(null,"testing");
-            }
-
-            //the last room
-            this.answer += "</table>";
-
-        }
-
-        private void getHotelDetails() {
-
-            this.answer = "Answer found is  \n <center><font color='blue' size='14' > The Hotel Details</font></center>\n";
-            this.answer+=" Hotel Name : "+hotel.getName()+"<br> ";
-            this.answer+=" Description: "+hotel.getDescriptions() +"<br>";
-            this.answer+=" Number of Rooms: "+hotel.getNumberOfRooms()+"<br>";
-        }
-
-        private void getBookings() {
-            this.bookings = this.hotel.getBookingInfo();
-            this.answer = " Hi below is the listd of all the bookings \n<center><font color='blue' size='14' > Booking Informations</font></center>\n";
-            this.answer += "<table> <tr><th>Booking ID</th><th>Room Number</th> <th>Customer ID</th>"
-                    + "<th>Description</th> <th>Status</th><th>Booked Date</th> </tr>";
-
-            Iterator<BookingInfo> iter = this.bookings.iterator();
-
-            while (iter.hasNext()) {
-                //get all the rooms in the databases
-            }
-
-            //the last room
-            this.answer += "<tr><th>Booking ID</th><th>Room Number</th> <th>Customer ID</th>"
-                    + "<th>Description</th> <th>Status</th><th>Booked Date</th> </tr>";
-            this.answer += " </table>";
-        }
-
-        private void getRobotInformation() {
-
-            this.supporters = hotel.get_0020Supporter();
-            this.answer += "Well! I am a robot and I am here to help you!\n I'm not allow to tell you any thing more  than this!\n";
-        }
-
-        private void error() {
-
-            this.answer = "I dont understand that please can your enter your question again!\n";
-        }
-
-        private String setQuestionType(int question_type) {
-
-            this.analysis(question_type);
-            return this.answer;
-
-        }
-
-    }
+  
+   
 }

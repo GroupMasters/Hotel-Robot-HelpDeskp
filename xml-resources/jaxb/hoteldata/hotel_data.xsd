@@ -50,6 +50,7 @@ and open the template in the editor.
                 <xs:element name="roomNumber" type="RateInteger" />               
                 <xs:element name="Descriptions" type="xs:string" />
                  <xs:element name="status" type="xs:boolean" />
+                   <xs:element name="bookingDate" type="xs:date" />
             </xs:sequence>
       </xs:complexType>        
   

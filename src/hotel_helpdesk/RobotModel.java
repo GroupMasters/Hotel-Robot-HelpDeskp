@@ -8,6 +8,9 @@ package hotel_helpdesk;
 import java.util.StringTokenizer;
 import helps.IObserver;
 import helps.ISubject;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -41,12 +44,16 @@ class RobotModel extends Object implements ISubject {
     void processMessage(String text) {
         
         String[] message = text.split("or");
+        //re split with and 
+        String[] tokensMessages = this.getSplitterMessage(message);
+        
+        
         StringTokenizer tokenizer1 = new StringTokenizer(text);
         this.brain.analysis(tokenizer1);       
         this.conversations.add("<br>" + UserStart + this.brain.recongnise() );
         
-        for(int i=0; i< message.length;i++){
-        StringTokenizer tokenizer = new StringTokenizer(message[i]);
+        for(int i=0; i <  tokensMessages.length;i++){
+            StringTokenizer tokenizer = new StringTokenizer(tokensMessages[i]);
 
         // finished processs the message call the controller results to display to the user
         
@@ -74,6 +81,34 @@ class RobotModel extends Object implements ISubject {
        conversations.add("\n2 - The Available Rooms .<br>");
        conversations.add("\n2 - The booking list .<br>");    
       
+    }
+
+    private String[] getSplitterMessage(String[] message) {
+     
+        //now take each substring and split
+        
+        List<String> tokensMessage=new ArrayList<>();
+        
+        for(String str:message)
+        {
+          String[] arrStr =   str.split("and");
+          for( String str2:arrStr)
+          {
+              tokensMessage.add(str2);
+          }
+        }
+        
+       String[] result = new String[tokensMessage.size()];
+       Iterator<String> iter = tokensMessage.iterator();
+       int counter=0;
+       while(iter.hasNext())
+       {
+           result[counter]=iter.next();
+           counter++;
+       }
+       
+       return result;
+       
     }
 
 }
