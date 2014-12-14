@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <hotel>
-    <name>University of west london &amp; obaro</name>
+    <name>Richest New Hotel</name>
     <numberOfRooms>12</numberOfRooms>
     <descriptions> Jason's  Sons Hotel was established in 1987 by Jimobama know ja sons. </descriptions>
     <BookingInfo>
@@ -20,21 +20,21 @@
     <Room>
         <roomNumber> 01 </roomNumber>
         <type> double</type>
-        <amount>0</amount>
+        <amount>180</amount>
         <status>true</status>
         <Descriptions>Two double bed, with big suit and televisions</Descriptions>
     </Room>
     <Room>
         <roomNumber> 02 </roomNumber>
         <type> Single</type>
-        <amount>0</amount>
+        <amount>300</amount>
         <status>true</status>
         <Descriptions>One big suit and bathroom and a televisions</Descriptions>
     </Room>
     <Room>
         <roomNumber> 03 </roomNumber>
         <type> double</type>
-        <amount>0</amount>
+        <amount>50</amount>
         <status>true</status>
         <Descriptions>Presidential suit and two big palour and dinner table and tv</Descriptions>
     </Room>

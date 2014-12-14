@@ -70,6 +70,7 @@ class RobotBrain {
         AmountsSym.add("total");
         AmountsSym.add("vacancy");
         AmountsSym.add("available");
+        AmountsSym.add("avaliable");
         AmountsSym.add("unavailable");
         AmountsSym.add("many");
         AmountsSym.add("cost");
