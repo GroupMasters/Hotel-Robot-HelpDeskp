@@ -82,7 +82,7 @@ import javax.swing.JOptionPane;
                 this.answer += "<hr>Room Number : "+temRoom.getRoomNumber();
                 this.answer+="<br>Room Type: "+temRoom.getType();
                 this.answer+="<br>Cost :"+temRoom.getAmount();
-                this.answer+="Description "+temRoom.getDescriptions();
+                this.answer+="<br>Description "+temRoom.getDescriptions();
                 this.answer+="Status "+temRoom.isStatus()+"<hr>";
                 
             }
@@ -131,8 +131,10 @@ import javax.swing.JOptionPane;
         }
 
        String setQuestionType(int question_type) {
-
+          try{
             this.analysis(question_type);
+            this.xmlhandler.marshaller(this.hotel);
+          }catch(Exception err){}
             return this.answer;
 
         }

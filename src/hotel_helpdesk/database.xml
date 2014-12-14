@@ -9,7 +9,6 @@
         <roomNumber>3</roomNumber>
         <Descriptions>This room is be book amount three days ago</Descriptions>
         <status>true</status>
-        <date>12/14/2014</date>
     </BookingInfo>
     <BookingInfo>
         <bookNo>1012</bookNo>
@@ -17,24 +16,23 @@
         <roomNumber>1</roomNumber>
         <Descriptions>This booking information is no longer valid</Descriptions>
         <status>true</status>
-         <date>12/14/2014</date>
     </BookingInfo>
     <Room>
-        <roomNumber> 1 </roomNumber>
+        <roomNumber> 01 </roomNumber>
         <type> double</type>
         <amount>0</amount>
         <status>true</status>
         <Descriptions>Two double bed, with big suit and televisions</Descriptions>
     </Room>
     <Room>
-        <roomNumber> 2 </roomNumber>
+        <roomNumber> 02 </roomNumber>
         <type> Single</type>
         <amount>0</amount>
         <status>true</status>
         <Descriptions>One big suit and bathroom and a televisions</Descriptions>
     </Room>
     <Room>
-        <roomNumber> 3 </roomNumber>
+        <roomNumber> 03 </roomNumber>
         <type> double</type>
         <amount>0</amount>
         <status>true</status>
